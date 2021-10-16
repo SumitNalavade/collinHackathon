@@ -5,7 +5,9 @@ body {
 #navbarText {
     font-size: 1.25em;
 }
-
+#secondLogo {
+    margin-right: 1em;
+}
 .nav-link {
     color: darkgrey !important;
 }
@@ -16,7 +18,7 @@ body {
     color: white !important;
 }
 
-.authButton {
+#donateButton {
     border: 1px solid white;
     border-radius: 10px;
 
@@ -25,20 +27,20 @@ body {
     padding: 0.15em 1em;
     margin: 0em 0.5em;
 }
-.authButton:hover {
+#donateButton:hover {
     text-decoration: underline;
 }
 
 #headingContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+    justify-items: space-evenly;
     align-items: center;
 
-    padding: 1em;
+    padding: 1em 2em;
 }
 #mainLogo {
-    width: 75%;
+    width: 85%;
 }
 #headingText {
     color: #198754;
@@ -54,14 +56,34 @@ body {
     font-style: italic;
 }
 
+.items-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.card {
+    margin: 1em;
+}
+.item-image {
+    width: 10em;
+    object-fit: contain;
+
+    margin: auto;
+
+    padding: 1em;
+    margin-bottom: 5em;
+}
+
+
 
 @media only screen and (max-width: 991px) {
 
     #headingContainer {
         grid-template-columns: repeat(1, 1fr);
+        justify-items: center;
     }
     
-    #authButtonsContainer, .authButton {
+    #authButtonsContainer, #donateButton {
         display: block !important;
 
         margin: 1em 0em;

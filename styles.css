@@ -19,6 +19,7 @@ body {
 }
 
 #donateButton {
+    color:black;
     border: 1px solid white;
     border-radius: 10px;
 
@@ -66,7 +67,7 @@ body {
 }
 .item-image {
     width: 10em;
-    object-fit: contain;
+    object-fit: fill;
 
     margin: auto;
 
@@ -74,7 +75,25 @@ body {
     margin-bottom: 5em;
 }
 
+.donorDetail {
+    font-weight: bold;
+}
 
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+form span {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0em;
+}
+
+.itemImage {
+    width: 10em;
+    object-fit: fill;
+}
 
 @media only screen and (max-width: 991px) {
 

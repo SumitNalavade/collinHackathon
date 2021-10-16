@@ -63,7 +63,7 @@ body {
     flex-wrap: wrap;
 }
 .card {
-    margin: 1em;
+    margin: 1em 3em;
 }
 .item-image {
     width: 10em;

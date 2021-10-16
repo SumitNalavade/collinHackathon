@@ -1,0 +1,69 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#navbarText {
+    font-size: 1.25em;
+}
+
+.nav-link {
+    color: darkgrey !important;
+}
+.active {
+    color: white !important;
+}
+.nav-link:hover {
+    color: white !important;
+}
+
+.authButton {
+    border: 1px solid white;
+    border-radius: 10px;
+
+    background-color: white;
+
+    padding: 0.15em 1em;
+    margin: 0em 0.5em;
+}
+.authButton:hover {
+    text-decoration: underline;
+}
+
+#headingContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+
+    padding: 1em;
+}
+#mainLogo {
+    width: 75%;
+}
+#headingText {
+    color: #198754;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+#title {
+    line-height: 2;
+    font-weight: 600;
+}
+#description {
+    color: #CC3F0C;
+    font-style: italic;
+}
+
+
+@media only screen and (max-width: 991px) {
+
+    #headingContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    #authButtonsContainer, .authButton {
+        display: block !important;
+
+        margin: 1em 0em;
+    }
+  }

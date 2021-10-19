@@ -27,3 +27,13 @@ main {
 .carousel-inner .carousel-item {
     max-height: 500px;
 }
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+}
+.authForm div {
+    display: grid;
+    grid-template-columns: 2;
+    margin: 0.75em 0em;
+}

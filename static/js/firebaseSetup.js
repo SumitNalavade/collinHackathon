@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, query, getDocs } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,3 +24,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore();
+
+const auth = getAuth(app);
+document.querySelector("#signUpButton").addEventListener("click", (evt) => {
+    evt.preventDefault();
+    const email = document.querySelector("#signupEmail").value
+    const password = document.querySelector("#signupPassword").value
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        //Signed In
+        const user = userCredential.user;
+        console.log("created")
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log(errorCode + errorMessage);
+    })
+})

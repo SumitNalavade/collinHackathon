@@ -37,5 +37,5 @@ function successfulSignIn() {
     })
 
     document.querySelector(".btn-close").click();
-    document.querySelector(".bi-person").classList.toggle("d-none");
+    document.querySelector("#profileIconButton").classList.toggle("d-none");
 }

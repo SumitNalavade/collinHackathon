@@ -12,7 +12,9 @@ document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     const address = document.querySelector("#signupAddress").value;
 
     signUpUser(firstName, lastName, email, password, address).then((status) => {
-        successfulSignIn();
+        if (status != 0) { return } 
+
+        successfulSignIn()
     })
 })
 
@@ -23,7 +25,9 @@ document.querySelector("#loginButton").addEventListener("click", (evt) => {
     const password = document.querySelector("#passwordLogin").value;
 
     signInUser(email, password).then((status) => {
-        successfulSignIn();
+        if(status != 0) { return } 
+
+        successfulSignIn()
     })
 })
 

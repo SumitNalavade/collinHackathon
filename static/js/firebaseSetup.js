@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, query, getDocs } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,25 +22,48 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore();
-
 const auth = getAuth(app);
-document.querySelector("#signUpButton").addEventListener("click", (evt) => {
-    evt.preventDefault();
-    const email = document.querySelector("#signupEmail").value
-    const password = document.querySelector("#signupPassword").value
 
+export async function signUpUser(firstName, lastName, email, password, address) {
+    let status;
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        //Signed In
-        const user = userCredential.user;
-        console.log("created")
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        .then((userCredential) => {
+            const user = userCredential.user; //Signed in user
+            updateProfile(user, {
+                displayName: `${firstName} ${lastName}`,
+                firstName: firstName,
+                lastName: lastName,
+                address: address
+            }).then(() => {
+                sendEmailVerification(user)
+            }).then(() => {
+                alert("New user created");
+                status = 0;
+            })
+        }).catch((error) => {
+            console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);
+            if (error.code === "auth/email-already-in-use") {
+                alert("Error: User already exists");
+            } else {
+                alert("Error creating user");
+                status = -1;
+            }
+        })
+    return status
+}
 
-        console.log(errorCode + errorMessage);
-    })
-})
+export async function signInUser(email, password) {
+    let status;
+    await signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user //Signed in user
+            alert("Sign in successful");
+            status = 0;
+        }).catch((error) => {
+            console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);
+            alert("Sign in unsuccessful")
+            status = -1
+        })
+    return status
+}

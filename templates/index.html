@@ -52,8 +52,11 @@
                         <a class="nav-link">Learn More</a>
                     </li>
                 </ul>
-                <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                <button class="btn btn-success navAction" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">Login</button>
+
+                <button class="btn btn-success navAction d-none" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Donate</button>
             </div>
         </div>
     </nav>
@@ -135,8 +138,8 @@
                                     <div class="accordion-body">
                                         <form class="authForm">
                                             <div>
-                                                <label>Username</label>
-                                                <input type="username" id="usernameLogin" class="loginInput authInput"
+                                                <label>Email</label>
+                                                <input type="username" id="emailLogin" class="loginInput authInput"
                                                     required>
                                             </div>
                                             <div>
@@ -144,12 +147,13 @@
                                                 <input type="password" id="passwordLogin" class="loginInput authInput"
                                                     required>
                                             </div>
-                                            <button type="submit" class="btn btn-success">Login</button>
+                                            <button type="submit" class="btn btn-success"
+                                                id="loginButton">Login</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Sign In Accordion -->
+                            <!-- Sign Up Accordion -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -163,11 +167,13 @@
                                         <div class="authForm">
                                             <div>
                                                 <label>First Name</label>
-                                                <input type="text" class="signUpInput authInput" required>
+                                                <input type="text" class="signUpInput authInput" id="signupFirstName"
+                                                    required>
                                             </div>
                                             <div>
                                                 <label>Last Name</label>
-                                                <input type="text" class="signUpInput authInput" required>
+                                                <input type="text" class="signUpInput authInput" id="signupLastName"
+                                                    required>
                                             </div>
                                             <div>
                                                 <label>Email</label>
@@ -181,7 +187,7 @@
                                             </div>
                                             <div>
                                                 <label>Address</label>
-                                                <input type="address" class="signUpInput authInput">
+                                                <input type="address" class="signUpInput authInput" id="signupAddress">
                                             </div>
                                             <button type="submit" class="btn btn-success" id="signUpButton">Sign
                                                 Up</button>

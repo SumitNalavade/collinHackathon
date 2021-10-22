@@ -14,7 +14,7 @@ document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     signUpUser(firstName, lastName, email, password, address).then((status) => {
         if (status != 0) { return } 
 
-        successfulSignIn()
+        successfulSignIn();
     })
 })
 
@@ -27,14 +27,15 @@ document.querySelector("#loginButton").addEventListener("click", (evt) => {
     signInUser(email, password).then((status) => {
         if(status != 0) { return } 
 
-        successfulSignIn()
+        successfulSignIn();
     })
 })
 
 function successfulSignIn() {
     document.querySelectorAll(".navAction").forEach((button) => {
-        button.classList.toggle("d-none")
+        button.classList.toggle("d-none");
     })
 
-    document.querySelector(".btn-close").click()
+    document.querySelector(".btn-close").click();
+    document.querySelector(".bi-person").classList.toggle("d-none");
 }

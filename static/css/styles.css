@@ -12,6 +12,9 @@
     background-color: #212529 !important;
     color: #198754 !important;
 }
+.bi-person {
+    margin-left: 10px;
+}
 
 .custom-toggler.navbar-toggler {
     border-color: white;

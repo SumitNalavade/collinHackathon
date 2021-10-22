@@ -27,9 +27,10 @@ const auth = getAuth(app);
 
 export async function signUpUser(firstName, lastName, email, password, address) {
     let status;
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user; //Signed in user
+            status = 0;
             updateProfile(user, {
                 displayName: `${firstName} ${lastName}`,
                 firstName: firstName,
@@ -39,7 +40,6 @@ export async function signUpUser(firstName, lastName, email, password, address) 
                 sendEmailVerification(user)
             }).then(() => {
                 alert("New user created");
-                status = 0;
             })
         }).catch((error) => {
             console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);

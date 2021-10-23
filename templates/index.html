@@ -53,11 +53,11 @@
                         <a class="nav-link">Learn More</a>
                     </li>
                 </ul>
-                <button class="btn btn-success navAction" id = "navLoginButton" type="button" data-bs-toggle="modal"
+                <button class="btn btn-success navAction" id="navLoginButton" type="button" data-bs-toggle="modal"
                     data-bs-target="#loginModal">Login</button>
 
-                <button class="btn btn-success navAction d-none" id = "navDonateButton" type="button" data-bs-toggle="modal"
-                    data-bs-target="#donateModal">Donate</button>
+                <button class="btn btn-success navAction d-none" id="navDonateButton" type="button"
+                    data-bs-toggle="modal" data-bs-target="#donateModal">Donate</button>
 
                 <button class="d-none" id="profileIconButton" data-bs-toggle="modal" data-bs-target="#profileModal"><svg
                         xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person"
@@ -221,11 +221,35 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <button class="btn btn-success" id="signOutButton">Sign Out</button>
+                        <div class="authForm">
+                            <div>
+                                <label>First Name</label>
+                                <p class="profileInfo" id="profileFirstName">Temp</p>
+                            </div>
+                            <div>
+                                <label>Last Name</label>
+                                <p class="profileInfo" id="profileLastName">Temp</p>
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                <p class="profileInfo" id="profileEmail">Temp</p>
+                            </div>
+                            <div>
+                                <label>Password</label>
+                                <p class="profileInfo" id="profilePassword">Temp</p>
+                            </div>
+                            <div>
+                                <label>Address</label>
+                                <p class="profileInfo" id="profileAddress">Temp</p>
+                            </div>
+
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" id="closeModalButton"
+                            data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
+                        <button class="btn btn-danger" id="signOutButton">Sign Out</button>
                     </div>
                 </div>
             </div>
@@ -244,7 +268,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>

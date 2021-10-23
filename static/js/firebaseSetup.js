@@ -64,7 +64,6 @@ export function signInUser(email, password) {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user //Signed in user
-            alert("Sign in successful");
         }).catch((error) => {
             console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);
             alert("Sign in unsuccessful")
@@ -73,8 +72,20 @@ export function signInUser(email, password) {
 
 export function signOutUser() {
     signOut(auth).then(() => {
-        alert("sign out successful")
     }).catch(() => {
         alert("Error signing out")
     })
+}
+
+export function getCurrentUserProfile() {
+    const user = auth.currentUser;
+
+    if (!user) { return }
+
+    return {
+        displayName: user.displayName,
+        email: user.email,
+        uid: user.uid
+    }
+
 }

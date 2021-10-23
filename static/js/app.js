@@ -1,6 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, getCurrentUserProfile } from "./firebaseSetup.js"
 
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
@@ -35,11 +35,18 @@ export function successfulSignIn() {
 export function successfulSignOut() {
     document.querySelector("#navLoginButton").classList.remove("d-none");
     document.querySelector("#navDonateButton").classList.add("d-none");
-
-    document.querySelector(".btn-close").click();
     document.querySelector("#profileIconButton").classList.add("d-none");
+
+    document.querySelector("#closeModalButton").click();
+
 }
 
 document.querySelector("#signOutButton").addEventListener("click", (evt) => {
     signOutUser();
+})
+
+document.querySelector("#profileIconButton").addEventListener("click", (evt) => {
+    const userData = getCurrentUserProfile();
+
+    document.querySelector("#profileModalTitle").innerHTML = `Hello ${userData.displayName}`
 })

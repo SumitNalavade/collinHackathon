@@ -12,7 +12,7 @@
     background-color: #212529 !important;
     color: #198754 !important;
 }
-#profileIconButton {
+#profileIconButton, #bagIconButton {
     border: none;
     background-color: #212529 !important;
 

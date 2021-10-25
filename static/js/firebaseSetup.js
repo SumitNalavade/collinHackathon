@@ -41,10 +41,7 @@ export function signUpUser(firstName, lastName, email, password, address) {
         .then((userCredential) => {
             const user = userCredential.user; //Signed in user
             updateProfile(user, {
-                displayName: `${firstName} ${lastName}`,
-                firstName: firstName,
-                lastName: lastName,
-                address: address
+                displayName: `${firstName} ${lastName}`
             }).then(() => {
                 sendEmailVerification(user)
             }).then(() => {
@@ -84,7 +81,6 @@ export function getCurrentUserProfile() {
 
     return {
         displayName: user.displayName,
-        email: user.email,
         uid: user.uid
     }
 

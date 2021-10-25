@@ -1,6 +1,7 @@
 "use strict"
 
 import { signUpUser, signInUser, signOutUser, getCurrentUserProfile } from "./firebaseSetup.js"
+import { auth } from "./firebaseSetup.js"
 
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
@@ -49,4 +50,13 @@ document.querySelector("#profileIconButton").addEventListener("click", (evt) => 
     const userData = getCurrentUserProfile();
 
     document.querySelector("#profileModalTitle").innerHTML = `Hello ${userData.displayName}`
+    fillProfileModal()
+    
 })
+
+function fillProfileModal() {
+    const currentUser = getCurrentUserProfile()
+
+    document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName
+    document.querySelector("#profileEmail").innerHTML = currentUser.email
+}

@@ -23,7 +23,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -42,12 +42,12 @@ export function signUpUser(firstName, lastName, email, password, address) {
             const user = userCredential.user; //Signed in user
             updateProfile(user, {
                 displayName: `${firstName} ${lastName}`
-            }).then(() => createUsersDoc(firstName, lastName, email, password, address, String(auth.uid)))
-            .then(() => {
-                sendEmailVerification(user)
-            }).then(() => {
-                alert("New user created");
-            })
+            }).then(() => createUsersDoc(firstName, lastName, address, String(user.uid)))
+                .then(() => {
+                    sendEmailVerification(user)
+                }).then(() => {
+                    alert("New user created");
+                })
         }).catch((error) => {
             console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);
             if (error.code === "auth/email-already-in-use") {
@@ -57,19 +57,15 @@ export function signUpUser(firstName, lastName, email, password, address) {
             }
         })
 }
-async function createUsersDoc(firstName, lastName, email, password, address, uid) {
+async function createUsersDoc(firstName, lastName, address, uid) {
     const usersRef = collection(db, "users");
 
     await setDoc(doc(usersRef, uid), {
-        displayName : `${firstName} ${lastName}`,
-        firstName : firstName,
-        lastName : lastName,
-        email : email,
-        password : password,
-        address : address,
-        uid : uid
+        displayName: `${firstName} ${lastName}`,
+        address: address,
+        uid: uid
     })
-    
+
 }
 
 export function signInUser(email, password) {
@@ -96,7 +92,7 @@ export function getCurrentUserProfile() {
 
     return {
         displayName: user.displayName,
-        uid: user.uid
+        email: user.email,
     }
 
 }

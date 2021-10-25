@@ -42,7 +42,8 @@ export function signUpUser(firstName, lastName, email, password, address) {
             const user = userCredential.user; //Signed in user
             updateProfile(user, {
                 displayName: `${firstName} ${lastName}`
-            }).then(() => {
+            }).then(() => createUsersDoc(firstName, lastName, email, password, address, String(auth.uid)))
+            .then(() => {
                 sendEmailVerification(user)
             }).then(() => {
                 alert("New user created");
@@ -55,6 +56,20 @@ export function signUpUser(firstName, lastName, email, password, address) {
                 alert("Error creating user");
             }
         })
+}
+async function createUsersDoc(firstName, lastName, email, password, address, uid) {
+    const usersRef = collection(db, "users");
+
+    await setDoc(doc(usersRef, uid), {
+        displayName : `${firstName} ${lastName}`,
+        firstName : firstName,
+        lastName : lastName,
+        email : email,
+        password : password,
+        address : address,
+        uid : uid
+    })
+    
 }
 
 export function signInUser(email, password) {

@@ -46,13 +46,16 @@ document.querySelector("#signOutButton").addEventListener("click", (evt) => {
 })
 
 document.querySelector("#profileIconButton").addEventListener("click", (evt) => {
-    fillProfileModal()    
+    fillProfileModal()
 })
 
 function fillProfileModal() {
-    const currentUser = getCurrentUserProfile()
+    const currentUser = getCurrentUserProfile().then((response) => {
+        document.querySelector("#profileModalTitle").innerHTML = `Hello ${response.displayName}`
+        document.querySelector("#profileDisplayName").innerHTML = response.displayName
+        document.querySelector("#profileEmail").innerHTML = response.email
+        document.querySelector("#profileAddress").innerHTML = response.address
+    })
 
-    document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`
-    document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName
-    document.querySelector("#profileEmail").innerHTML = currentUser.email
+
 }

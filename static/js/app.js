@@ -50,12 +50,10 @@ document.querySelector("#profileIconButton").addEventListener("click", (evt) => 
 })
 
 function fillProfileModal() {
-    const currentUser = getCurrentUserProfile().then((response) => {
+    getCurrentUserProfile().then((response) => {
         document.querySelector("#profileModalTitle").innerHTML = `Hello ${response.displayName}`
         document.querySelector("#profileDisplayName").innerHTML = response.displayName
         document.querySelector("#profileEmail").innerHTML = response.email
         document.querySelector("#profileAddress").innerHTML = response.address
     })
-
-
 }

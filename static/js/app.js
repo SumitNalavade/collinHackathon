@@ -1,6 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem } from "./firebaseSetup.js"
 
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
@@ -28,6 +28,8 @@ export function successfulSignIn() {
         button.classList.toggle("d-none");
     })
 
+    fillProfileModal();
+
     document.querySelector(".btn-close").click();
 }
 
@@ -43,4 +45,33 @@ export function successfulSignOut() {
 
 document.querySelector("#signOutButton").addEventListener("click", (evt) => {
     signOutUser();
+})
+
+function fillProfileModal() {
+    getCurrentUserProfile().then((currentUser) => {
+        document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`
+        document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName
+        document.querySelector("#profileEmail").innerHTML = currentUser.email
+        document.querySelector("#profileAddress").innerHTML = currentUser.address
+    })
+}
+
+document.querySelector("#resetPasswordButton").addEventListener("click", () => {
+    resetPassword()
+})
+
+document.querySelector("#donateButton").addEventListener("click", (evt) => {
+    evt.preventDefault();
+
+    const itemName = document.querySelector("#itemName").value
+    const itemDescription = document.querySelector("#itemDescription").value
+
+    addNewItem(itemName, itemDescription).then(() => {
+        document.querySelector("#donateModalClose").click();
+        document.querySelectorAll(".donateInput").forEach((input) => {
+            input.value = "";
+        })
+
+        alert("New item added");
+    })
 })

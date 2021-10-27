@@ -149,7 +149,7 @@
                                 <div id="collapseOne" class="accordion-collapse collapse show"
                                     aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <form class="authForm">
+                                        <form class="form authForm">
                                             <div>
                                                 <label>Email</label>
                                                 <input type="username" id="emailLogin" class="loginInput authInput"
@@ -176,7 +176,7 @@
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <form class="authForm">
+                                        <form class="form authForm">
                                             <div>
                                                 <label>First Name</label>
                                                 <input type="text" class="signUpInput authInput" id="signupFirstName"
@@ -256,21 +256,21 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="profileModalTitle">Donate</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="donateModalTitle">Donate</h5>
+                        <button type="button" class="btn-close" id = "donateModalClose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="authForm">
+                        <form class="form donateForm">
                             <div>
                                 <label>Item Name</label>
-                                <input required>
+                                <input required id = "itemName" class = "donateInput">
                             </div>
                             <div>
                                 <label>Item Description</label>
-                                <textarea rows="4" cols="50">
+                                <textarea rows="4" cols="30" id = "itemDescription" class = "donateInput">
                                     </textarea>
                             </div>
-                            <button class="btn btn-success">Donate</button>
+                            <button class="btn btn-success" id = "donateButton">Donate</button>
 
                         </form>
                     </div>
@@ -300,8 +300,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script type="module" src="/static/js/firebaseSetup.js"></script>
-    <script type="module" src="/static/js/auth.js"></script>
-    <script type="module" src="/static/js/modals.js"></script>
+    <script type="module" src="/static/js/app.js"></script>
 </body>
 
 </html>

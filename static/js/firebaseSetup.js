@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, query, getDocs } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-import { successfulSignIn, successfulSignOut } from "./auth.js";
+import { successfulSignIn, successfulSignOut } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -107,8 +107,18 @@ export function resetPassword() {
             alert("Password reset email has been sent")
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
+            alert("Error sending password reset email")
         });
+}
+
+export async function addNewItem(itemName, itemDescription) {
+    const usersRef = collection(db, "users", auth.currentUser.uid, "items");
+
+    await setDoc(doc(usersRef, itemName), {
+        itemName: itemName,
+        itemDescription: itemDescription,
+        address: (await getCurrentUserProfile()).address
+    })
+
+
 }

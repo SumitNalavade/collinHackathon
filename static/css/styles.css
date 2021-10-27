@@ -34,23 +34,19 @@ main {
     max-height: 500px;
 }
 
-.authForm {
+.form {
     display: flex;
     flex-direction: column;
 }
-.authForm div {
+.form div {
     display: grid;
     grid-template-columns: 2;
     margin: 0.75em 0em;
 }
-#loadingAlert {
-    display: flex;
-    align-items: center;
-    font-size: 1.25em;
-}
-.spinner-border {
-    margin: 0em 1em !important;
-}
 label {
     font-weight: bold;
+}
+
+textarea {
+    width: 100%;
 }

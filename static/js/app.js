@@ -65,13 +65,19 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
 
     const itemName = document.querySelector("#itemName").value
     const itemDescription = document.querySelector("#itemDescription").value
+    let itemCategory = "";
 
-    addNewItem(itemName, itemDescription).then(() => {
+    document.querySelectorAll(".form-check-input").forEach((input) => {
+        if (input.checked) {
+            itemCategory = input.value
+            return
+        }
+    })
+
+    addNewItem(itemName, itemDescription, itemCategory).then(() => {
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
             input.value = "";
         })
-
-        alert("New item added");
     })
 })

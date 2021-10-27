@@ -50,3 +50,17 @@ label {
 textarea {
     width: 100%;
 }
+
+.categories {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
+    align-content: space-around;
+}
+.form-check {
+    display: flex !important;
+}
+.form-check-label {
+    font-weight: normal;
+}
+

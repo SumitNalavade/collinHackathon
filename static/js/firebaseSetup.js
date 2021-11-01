@@ -113,7 +113,7 @@ export function resetPassword() {
 
 export async function addNewItem(itemName, itemDescription, category) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
-    const itemsRef = collection(db, "items");
+    const itemsRef = collection(db, "items", category, "items   ");
 
     const address = (await getCurrentUserProfile()).address
 

@@ -23,6 +23,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
+const storage = getStorage();
 export const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
@@ -111,7 +112,7 @@ export function resetPassword() {
         });
 }
 
-export async function addNewItem(itemName, itemDescription, category) {
+export async function addNewItem(itemName, itemDescription, category, file) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
     const itemsRef = collection(db, "items", category, "items   ");
 
@@ -125,15 +126,16 @@ export async function addNewItem(itemName, itemDescription, category) {
     })
     await setDoc(doc(itemsRef, itemName), {
         itemName: itemName,
-        itemDescription : itemDescription,
+        itemDescription: itemDescription,
         itemCategory: category,
         address: address,
-        userID : String(auth.currentUser.uid)
-    }) 
-    .then(() => {
-        alert("New item added")
+        userID: String(auth.currentUser.uid)
     })
-    .catch((error) => alert("Error adding item"))
-
-
+    .then(() => {
+        addImage(file)
+    })
+        .then(() => {
+            alert("New item added")
+        })
+        .catch((error) => alert("Error adding item"))
 }

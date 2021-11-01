@@ -113,13 +113,23 @@ export function resetPassword() {
 
 export async function addNewItem(itemName, itemDescription, category) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
+    const itemsRef = collection(db, "items");
+
+    const address = (await getCurrentUserProfile()).address
 
     await setDoc(doc(usersRef, itemName), {
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: category,
-        address: (await getCurrentUserProfile()).address
+        address: address
     })
+    await setDoc(doc(itemsRef, itemName), {
+        itemName: itemName,
+        itemDescription : itemDescription,
+        itemCategory: category,
+        address: address,
+        userID : String(auth.currentUser.uid)
+    }) 
     .then(() => {
         alert("New item added")
     })

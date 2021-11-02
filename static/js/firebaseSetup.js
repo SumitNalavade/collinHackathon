@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, query, getDocs } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
+import { getFirestore, doc, getDoc, setDoc, collection } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
 import { successfulSignIn, successfulSignOut } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -112,11 +113,14 @@ export function resetPassword() {
         });
 }
 
-export async function addNewItem(itemName, itemDescription, category, file) {
+export async function addNewItem(itemName, itemDescription, category) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
-    const itemsRef = collection(db, "items", category, "items   ");
+    const itemsRef = collection(db, "items", category, "items");
+    const storageRef = ref(storage, "itemName");
 
     const address = (await getCurrentUserProfile()).address
+
+    const itemImage = document.querySelector('#itemImage').files[0];
 
     await setDoc(doc(usersRef, itemName), {
         itemName: itemName,
@@ -131,9 +135,8 @@ export async function addNewItem(itemName, itemDescription, category, file) {
         address: address,
         userID: String(auth.currentUser.uid)
     })
-    .then(() => {
-        addImage(file)
-    })
+
+    await uploadBytes(storageRef, file)
         .then(() => {
             alert("New item added")
         })

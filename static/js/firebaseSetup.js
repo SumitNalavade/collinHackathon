@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
 import { successfulSignIn, successfulSignOut } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -113,32 +113,57 @@ export function resetPassword() {
         });
 }
 
-export async function addNewItem(itemName, itemDescription, category) {
+async function addItemsToUser(itemName, itemDescription, itemCategory, itemAddress, imageURL) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
-    const itemsRef = collection(db, "items", category, "items");
-    const storageRef = ref(storage, "itemName");
-
-    const address = (await getCurrentUserProfile()).address
-
-    const itemImage = document.querySelector('#itemImage').files[0];
 
     await setDoc(doc(usersRef, itemName), {
         itemName: itemName,
         itemDescription: itemDescription,
-        itemCategory: category,
-        address: address
+        itemCategory: itemCategory,
+        address: itemAddress,
+        imageURL : imageURL
     })
+}
+
+async function addItemsCollection(itemName, itemDescription, itemCategory, itemAddress, imageURL) {
+    const itemsRef = collection(db, "items", itemCategory, "items");
+
     await setDoc(doc(itemsRef, itemName), {
         itemName: itemName,
         itemDescription: itemDescription,
-        itemCategory: category,
-        address: address,
-        userID: String(auth.currentUser.uid)
+        itemCategory: itemCategory,
+        address: itemAddress,
+        userID: String(auth.currentUser.uid),
+        imageURL: imageURL
     })
+}
 
-    await uploadBytes(storageRef, file)
-        .then(() => {
-            alert("New item added")
-        })
-        .catch((error) => alert("Error adding item"))
+async function addItemImage(image, imageName) {
+    let imageURL = "";
+
+    const storageRef = ref(storage, imageName);
+
+    await uploadBytes(storageRef, image)
+
+    await getDownloadURL(ref(storage, imageName))
+        .then((url) => imageURL = url)
+
+    return imageURL
+
+}
+
+export async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
+    const address = (await getCurrentUserProfile()).address
+
+    addItemImage(itemImage, itemName).then((url) => {
+        addItemsToUser(itemName, itemDescription, itemCategory, address, url)
+        addItemsCollection(itemName, itemDescription, itemCategory, address, url)
+    })
+    .then(() => {
+        alert("Item added successfull!")
+    })
+    .catch((error) => {
+        alert("Error adding item")
+        console.log(error)
+    })
 }

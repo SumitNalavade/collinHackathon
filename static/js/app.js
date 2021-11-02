@@ -68,18 +68,16 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
     let itemCategory = "";
     const itemImage = document.querySelector('#itemImage').files[0];
 
-
-    document.querySelectorAll(".form-check-input").forEach((input) => {
-        if (input.checked) {
-            itemCategory = input.value
-            return
+    document.querySelectorAll(".form-check-input").forEach((button) => {
+        if(button.checked) {
+            itemCategory = button.value
         }
     })
 
     addNewItem(itemName, itemDescription, itemCategory, itemImage).then(() => {
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
-            input.value = "";
+            input.checked = false;
         })
     })
 })

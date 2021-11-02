@@ -121,7 +121,7 @@ async function addItemsToUser(itemName, itemDescription, itemCategory, itemAddre
         itemDescription: itemDescription,
         itemCategory: itemCategory,
         address: itemAddress,
-        imageURL : imageURL
+        imageURL: imageURL
     })
 }
 
@@ -159,11 +159,11 @@ export async function addNewItem(itemName, itemDescription, itemCategory, itemIm
         addItemsToUser(itemName, itemDescription, itemCategory, address, url)
         addItemsCollection(itemName, itemDescription, itemCategory, address, url)
     })
-    .then(() => {
-        alert("Item added successfull!")
-    })
-    .catch((error) => {
-        alert("Error adding item")
-        console.log(error)
-    })
+        .then(() => {
+            alert("Item added successfull!")
+        })
+        .catch((error) => {
+            alert("Error adding item")
+            console.log(error)
+        })
 }

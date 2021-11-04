@@ -81,15 +81,3 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         })
     })
 })
-
-class Item {
-    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemCategory = itemCategory;
-        this.itemAddress = itemAddress;
-        this.imageURL = imageURL;
-        this.userID = userID;
-    }
-}
-

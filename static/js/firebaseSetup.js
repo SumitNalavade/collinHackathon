@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
+import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
 import { successfulSignIn, successfulSignOut } from "./app.js";
@@ -155,7 +155,7 @@ async function addItemImage(image, imageName) {
 
 export async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
     const address = (await getCurrentUserProfile()).address;
-    
+
     addItemImage(itemImage, itemName).then((imageURL) => {
         imageURL = imageURL;
 
@@ -171,3 +171,14 @@ export async function addNewItem(itemName, itemDescription, itemCategory, itemIm
         })
     })
 }
+
+export async function queryFeatured(category) {
+    const itemsRef = collection(db, "items", category, "items");
+
+    const q = query(itemsRef, limit(4));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot
+}
+

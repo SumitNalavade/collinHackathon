@@ -69,7 +69,7 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
     const itemImage = document.querySelector('#itemImage').files[0];
 
     document.querySelectorAll(".form-check-input").forEach((button) => {
-        if(button.checked) {
+        if (button.checked) {
             itemCategory = button.value
         }
     })
@@ -81,3 +81,15 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         })
     })
 })
+
+class Item {
+    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.itemAddress = itemAddress;
+        this.imageURL = imageURL;
+        this.userID = userID;
+    }
+}
+

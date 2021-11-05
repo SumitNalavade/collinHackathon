@@ -66,7 +66,7 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
     const itemName = document.querySelector("#itemName").value
     const itemDescription = document.querySelector("#itemDescription").value
     let itemCategory = "";
-    const itemImage = document.querySelector('#itemImage').files[0];
+    const itemImage = document.querySelector('#imageInput').files[0];
 
     document.querySelectorAll(".form-check-input").forEach((button) => {
         if (button.checked) {

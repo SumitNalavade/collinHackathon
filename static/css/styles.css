@@ -85,11 +85,7 @@ textarea {
 .featuredCards {
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
     flex-wrap: wrap;
-}
-.card {
-    margin-bottom: 1em;
 }
 .featuredTitle {
     font-size: 1.5rem;
@@ -99,12 +95,28 @@ textarea {
 
     color: #198754;
 }
+.card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+
+    margin-bottom: 1em;
+}
+.card-body {
+    text-align: center;
+}
+.itemImage {
+    width: 10rem;
+    height: 15rem;
+    object-fit: cover;
+
+    margin: auto;
+}
 
 #footerA {
     font-size: 1rem;
     margin: auto;
 }
-
 
 @media only screen and (max-width: 511px)  {
     .categories {

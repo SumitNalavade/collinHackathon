@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
+import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
 import { successfulSignIn, successfulSignOut, fillUserItems } from "./app.js";
@@ -194,3 +194,8 @@ export async function getUserItems(userID) {
     return querySnapshot
 }
 
+export async function deleteItem(category, itemID, userID) {
+    await deleteDoc(doc(db, "items", category, "items", itemID));
+    await deleteDoc(doc(db, "users", userID, "items", itemID));
+
+}

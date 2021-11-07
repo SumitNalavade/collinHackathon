@@ -1,6 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem } from "./firebaseSetup.js"
 
 export class Item {
     constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
@@ -105,24 +105,42 @@ export function fillUserItems(userID) {
     getUserItems(userID).then((items) => {
         items.forEach((doc) => {
             const { address, imageURL, itemCategory, itemDescription, itemName } = doc.data();
+            const itemID = doc.id;
 
-            console.log(imageURL);
+            console.log(itemID);
 
-            let temp = `
-            <div class="card selfCard mb-3" style="max-width: 540px;">       
-            <img src="${imageURL}" class="img-fluid rounded-start selfItemImage" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${itemName}</h5>
-                        <p class="card-text">${itemDescription}</p>
-                        <button class="btn btn-danger">Delete</button>
-                    </div>
-        </div>
-            `
+            let newCard = document.createElement("div");
+            newCard.classList.add("card", "selfCard", "mb-3")
+            newCard.style.maxWidth = "540px"
+            let newCardImage = document.createElement("img")
+            newCardImage.setAttribute("src", imageURL)
+            newCardImage.classList.add("img-fluid", "rounded-start", "selfItemImage")
+            newCard.appendChild(newCardImage)
+            let newCardBody = document.createElement("div");
+            newCardBody.classList.add("card-body", "selfItemsCardBody")
+            newCard.appendChild(newCardBody)
+            let newCardTitle = document.createElement("h5")
+            newCardTitle.classList.add("card-title")
+            newCardTitle.innerHTML = itemName
+            newCardBody.appendChild(newCardTitle)
+            let newCardText = document.createElement("p")
+            newCardText.classList.add("card-text")
+            newCardText.innerHTML = itemDescription
+            newCardBody.appendChild(newCardText)
 
-            document.querySelector("#selfItemAccordionBody").innerHTML += temp;
+            let newCardDelete = document.createElement("button")
+            newCardDelete.classList.add("btn", "btn-danger")
+            newCardDelete.innerHTML = "Delete"
+            newCardDelete.addEventListener("click", () => {
+                deleteItem(itemCategory, itemID, userID);
+            })
+            newCardBody.appendChild(newCardDelete)
+
+            document.querySelector("#selfItemAccordionBody").appendChild(newCard)
 
         })
     })
 }
+
 
 

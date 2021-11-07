@@ -26,5 +26,5 @@ function getFeatured(category) {
     })
 }
 
-//getFeatured("mensClothing");
-//getFeatured("womensClothing");
+getFeatured("mensClothing");
+getFeatured("womensClothing");

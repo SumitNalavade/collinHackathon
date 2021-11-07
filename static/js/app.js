@@ -1,6 +1,25 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems } from "./firebaseSetup.js"
+
+export class Item {
+    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.itemAddress = itemAddress;
+        this.imageURL = imageURL;
+        this.userID = userID;
+    }
+}
+
+export const Items = {
+    mensClothing: [],
+    womensClothing: [],
+    kidsClothing: [],
+    electronics: [],
+    furniture: []
+}
 
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
@@ -81,3 +100,29 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         })
     })
 })
+
+export function fillUserItems(userID) {
+    getUserItems(userID).then((items) => {
+        items.forEach((doc) => {
+            const { address, imageURL, itemCategory, itemDescription, itemName } = doc.data();
+
+            console.log(imageURL);
+
+            let temp = `
+            <div class="card selfCard mb-3" style="max-width: 540px;">       
+            <img src="${imageURL}" class="img-fluid rounded-start selfItemImage" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${itemName}</h5>
+                        <p class="card-text">${itemDescription}</p>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+        </div>
+            `
+
+            document.querySelector("#selfItemAccordionBody").innerHTML += temp;
+
+        })
+    })
+}
+
+

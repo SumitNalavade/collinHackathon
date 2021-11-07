@@ -1,23 +1,5 @@
 import { queryFeatured } from "./firebaseSetup.js";
-
-class Item {
-    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemCategory = itemCategory;
-        this.itemAddress = itemAddress;
-        this.imageURL = imageURL;
-        this.userID = userID;
-    }
-}
-
-const Items = {
-    mensClothing: [],
-    womensClothing: [],
-    kidsClothing: [],
-    electronics: [],
-    furniture: []
-}
+import { Item, Items } from "./app.js"
 
 function getFeatured(category) {
     queryFeatured(category).then((items) => {

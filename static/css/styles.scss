@@ -1,0 +1,76 @@
+$primary-color: #198754;
+$secondary-color: #212529;
+
+.navbar, .dropdown-item, .dropdown-menu, #profileIconButton, #bagIconButton {
+    background-color: $secondary-color !important;
+
+    .navbar-brand, .nav-item .nav-link, .dropdown-item{
+        color: white !important;
+
+        &:hover {
+            color: $primary-color !important
+        }
+    }
+
+    #profileIconButton, #bagIconButton {
+        border: none;
+        margin-left: 10px;
+    }
+
+    .custom-toggler.navbar-toggler {
+        border-color: white;
+    }
+    .custom-toggler .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+    
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    
+    .carousel-inner .carousel-item {
+        max-height: 500px;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+
+        div {
+            display: grid;
+            grid-template-columns: 2;
+            margin: 0.75em 0em;
+
+            label {
+                font-weight: bold;
+            }
+
+            textarea {
+                width: 100%;
+            }
+        }
+
+        .accordion-body {
+            padding: 10px !important;
+
+            .categories {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                justify-content: space-evenly;
+                align-content: space-around;
+
+                .form-check {
+                    display: flex !important;
+
+                    .form-check-label {
+                        font-weight: normal;
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+        
+    }
+}

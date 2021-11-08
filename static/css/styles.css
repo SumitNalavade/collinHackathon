@@ -1,20 +1,29 @@
+:root {
+    --main-bg-color: #212529;
+    --green-color: #198754;
+}
+
+body {
+    font-family: 'Rubik', sans-serif !important;
+}
+
 .navbar-brand, .nav-link, .dropdown-item {
     color : white !important;
 }
 .brandHighlight {
-    color: #198754;
+    color: var(--green-color);
 }
 .dropdown-menu {
-    background-color: #212529;
+    background-color: var(--main-bg-color);
     border-color: inherit;
 }
 .nav-link:hover, .dropdown-item:hover {
-    background-color: #212529 !important;
-    color: #198754 !important;
+    background-color: var(--main-bg-color) !important;
+    color: var(--green-color) !important;
 }
 #profileIconButton, #bagIconButton {
     border: none;
-    background-color: #212529 !important;
+    background-color: var(--main-bg-color) !important;
 
     margin-left: 10px;
 }
@@ -93,7 +102,7 @@ textarea {
 
     margin-bottom: 1em;
 
-    color: #198754;
+    color: var(--green-color);
 }
 .card {
     display: flex !important;
@@ -101,9 +110,13 @@ textarea {
     align-items: center;
 
     margin-bottom: 1em;
+    padding-bottom: 1em;
 
     width: 95% !important;
     max-width: 300px;
+
+    border-color: var(--green-color);
+    border-width: 2px;
 }
 .card-body {
     text-align: center;
@@ -131,6 +144,12 @@ textarea {
     width: 5em;
     height: 7.5em;
     object-fit: cover;
+}
+
+.arrowDiv {
+    display: none;
+    align-items: center;
+    order: 999;
 }
 
 @media only screen and (max-width: 511px)  {

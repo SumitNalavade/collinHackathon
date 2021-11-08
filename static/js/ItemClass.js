@@ -10,12 +10,15 @@ function getFeatured(category) {
 
             let temp = `
             <div class="card" style="width: 20rem; border-radius: 20px;">
-                        <img src="${imageURL}" class="card-img-top itemImage" alt="...">
+            <div>
+            <img src="${imageURL}" class="card-img-top itemImage" alt="...">
+            </div>
                         <div class="card-body">
                             <h5 class="card-title">${itemName}</h5>
                             <p class="card-text">${itemDescription}</p>
-                            <a href="#" class="btn btn-success">Add to cart</a>
                         </div>
+                        <a href="#" class="btn btn-success">Add to cart</a>
+
                     </div>
             `
 

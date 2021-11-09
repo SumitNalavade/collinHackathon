@@ -145,7 +145,7 @@ main {
   flex-direction: column !important;
   align-items: center;
   margin-bottom: 1em;
-  padding-bottom: 1em;
+  padding: 1em;
   width: 95% !important;
   max-width: 300px;
   border-color: var(--green-color);
@@ -162,14 +162,22 @@ main {
 }
 
 .arrowDiv {
-  display: none;
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
   order: 999;
+  width: 100%;
+  margin: auto;
 }
 
 @media only screen and (max-width: 511px) {
   .categories {
     grid-template-columns: auto auto;
+  }
+}
+@media only screen and (max-width: 1368px) {
+  .arrowDiv {
+    justify-content: center;
   }
 }
 

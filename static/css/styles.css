@@ -84,6 +84,10 @@ main {
   max-height: 500px;
 }
 
+.brandHighlight {
+  color: #198754;
+}
+
 .form {
   display: flex;
   flex-direction: column;

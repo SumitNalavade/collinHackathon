@@ -2,6 +2,8 @@ import { queryFeatured } from "./firebaseSetup.js";
 import { Item, Items } from "./app.js"
 
 function getFeatured(category) {
+    document.querySelector(`#${category}`).innerHTML = "";
+
     queryFeatured(category).then((items) => {
         items.forEach((doc) => {
             const { itemName, itemDescription, itemCategory, itemAddress, imageURL, userID } = doc.data();
@@ -28,5 +30,6 @@ function getFeatured(category) {
 
     })
 }
-//getFeatured("mensClothing");
-//getFeatured("womensClothing");
+
+getFeatured("mensClothing");
+getFeatured("womensClothing");

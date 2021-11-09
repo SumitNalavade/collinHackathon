@@ -1,6 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, auth } from "./firebaseSetup.js"
 
 export class Item {
     constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
@@ -29,14 +29,13 @@ document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     const email = document.querySelector("#signupEmail")
     const password = document.querySelector("#signupPassword")
     const address = document.querySelector("#signupAddress")
-
-    let inputs = [firstName, lastName, email, password, address]
    
     signUpUser(firstName.value, lastName.value, email.value, password.value, address.value)
 
-    inputs.forEach((input) => {
-        input.value = "";
-    })
+    let inputs = [firstName, lastName, email, password, address]
+
+    inputs.forEach((input) => input.value = "")
+   
 })
 
 document.querySelector("#loginButton").addEventListener("click", (evt) => {
@@ -91,8 +90,8 @@ document.querySelector("#resetPasswordButton").addEventListener("click", () => {
 document.querySelector("#donateButton").addEventListener("click", (evt) => {
     evt.preventDefault();
 
-    const itemName = document.querySelector("#itemName").value
-    const itemDescription = document.querySelector("#itemDescription").value
+    const itemName = document.querySelector("#itemName")
+    const itemDescription = document.querySelector("#itemDescription")
     let itemCategory = "";
     const itemImage = document.querySelector('#imageInput').files[0];
 
@@ -102,15 +101,23 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         }
     })
 
-    addNewItem(itemName, itemDescription, itemCategory, itemImage).then(() => {
+    fillUserItems(auth.currentUser.uid);
+
+    addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage).then(() => {
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
             input.checked = false;
         })
     })
+
+    let inputs = [itemName, itemDescription]
+
+    inputs.forEach((input) => {input.value = ""})
 })
 
 export function fillUserItems(userID) {
+    document.querySelector("#selfItemAccordionBody").innerHTML = "";
+
     getUserItems(userID).then((items) => {
         items.forEach((doc) => {
             const { address, imageURL, itemCategory, itemDescription, itemName } = doc.data();

@@ -24,22 +24,31 @@ export const Items = {
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
 
-    const firstName = document.querySelector("#signupFirstName").value;
-    const lastName = document.querySelector("#signupLastName").value;
-    const email = document.querySelector("#signupEmail").value;
-    const password = document.querySelector("#signupPassword").value;
-    const address = document.querySelector("#signupAddress").value;
+    const firstName = document.querySelector("#signupFirstName")
+    const lastName = document.querySelector("#signupLastName")
+    const email = document.querySelector("#signupEmail")
+    const password = document.querySelector("#signupPassword")
+    const address = document.querySelector("#signupAddress")
 
-    signUpUser(firstName, lastName, email, password, address)
+    let inputs = [firstName, lastName, email, password, address]
+   
+    signUpUser(firstName.value, lastName.value, email.value, password.value, address.value)
+
+    inputs.forEach((input) => {
+        input.value = "";
+    })
 })
 
 document.querySelector("#loginButton").addEventListener("click", (evt) => {
     evt.preventDefault();
 
-    const email = document.querySelector("#emailLogin").value;
-    const password = document.querySelector("#passwordLogin").value;
+    const email = document.querySelector("#emailLogin")
+    const password = document.querySelector("#passwordLogin")
 
-    signInUser(email, password)
+    signInUser(email.value, password.value)
+
+    email.value = ""
+    password.value = ""
 })
 
 export function successfulSignIn() {
@@ -107,8 +116,6 @@ export function fillUserItems(userID) {
             const { address, imageURL, itemCategory, itemDescription, itemName } = doc.data();
             const itemID = doc.id;
 
-            console.log(itemID);
-
             let newCard = document.createElement("div");
             newCard.classList.add("card", "selfCard", "mb-3")
             newCard.style.maxWidth = "540px"
@@ -132,7 +139,7 @@ export function fillUserItems(userID) {
             newCardDelete.classList.add("btn", "btn-danger")
             newCardDelete.innerHTML = "Delete"
             newCardDelete.addEventListener("click", () => {
-                deleteItem(itemCategory, itemID, userID);
+                deleteItem(itemCategory, itemID, userID, imageURL);
             })
             newCardBody.appendChild(newCardDelete)
 
@@ -141,5 +148,7 @@ export function fillUserItems(userID) {
         })
     })
 }
+
+
 
 

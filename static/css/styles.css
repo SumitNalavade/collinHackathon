@@ -93,14 +93,8 @@ main {
   grid-template-columns: 2;
   margin: 0.75em 0em;
 }
-.form div label {
-  font-weight: bold;
-}
 .form div textarea {
   width: 100%;
-}
-.form .accordion-body {
-  padding: 10px !important;
 }
 .form .accordion-body .categories {
   display: grid;
@@ -148,7 +142,7 @@ main {
   padding: 1em;
   width: 95% !important;
   max-width: 300px;
-  border-color: var(--green-color);
+  border-color: #198754;
   border-width: 2px;
 }
 .card .card-body {
@@ -159,6 +153,17 @@ main {
   height: 15em;
   object-fit: cover;
   margin: auto;
+}
+.card .selfCard {
+  align-items: initial;
+  flex-direction: row !important;
+  justify-content: center !important;
+  margin: auto;
+}
+.card .selfItemImage {
+  width: 5em;
+  height: 7.5em;
+  object-fit: cover;
 }
 
 .arrowDiv {

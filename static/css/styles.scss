@@ -55,18 +55,12 @@ main {
     grid-template-columns: 2;
     margin: 0.75em 0em;
 
-    label {
-      font-weight: bold;
-    }
-
     textarea {
       width: 100%;
     }
   }
 
   .accordion-body {
-    padding: 10px !important;
-
     .categories {
       display: grid;
       grid-template-columns: auto auto auto;
@@ -127,7 +121,7 @@ main {
   width: 95% !important;
   max-width: 300px;
 
-  border-color: var(--green-color);
+  border-color: $primary-color;
   border-width: 2px;
 
   .card-body {
@@ -140,6 +134,18 @@ main {
     object-fit: cover;
 
     margin: auto;
+  }
+
+  .selfCard {
+    align-items: initial;
+    flex-direction: row !important;
+    justify-content: center !important;
+    margin: auto;
+  }
+  .selfItemImage {
+    width: 5em;
+    height: 7.5em;
+    object-fit: cover;
   }
 }
 

@@ -2,8 +2,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
 import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
-import { successfulSignIn, successfulSignOut, fillUserItems } from "./app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
+import { successfulSignIn, successfulSignOut } from "./app.js";
+import { fillUserItems } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -29,12 +30,10 @@ export const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("User is signed in")
         const uid = user.uid;
         successfulSignIn();
         fillUserItems(auth.currentUser.uid)
     } else {
-        console.log("User is signed out")
         successfulSignOut();
     }
 });
@@ -194,8 +193,16 @@ export async function getUserItems(userID) {
     return querySnapshot
 }
 
-export async function deleteItem(category, itemID, userID) {
+export async function deleteItem(category, itemID, userID, imageURL) {
     await deleteDoc(doc(db, "items", category, "items", itemID));
     await deleteDoc(doc(db, "users", userID, "items", itemID));
 
+    const imageRef = ref(storage, imageURL);
+
+    deleteObject(imageRef).then(() => {
+        alert("Item removed succesfully")
+      }).catch((error) => {
+          alert("Error removing item")
+        console.log(error)
+      });
 }

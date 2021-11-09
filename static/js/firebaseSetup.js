@@ -162,6 +162,7 @@ export async function addNewItem(itemName, itemDescription, itemCategory, itemIm
         addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL).then((itemID) => {
             addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID)
                 .then(() => {
+                    fillUserItems(auth.currentUser.uid)
                     alert("Item added successfully");
                 })
                 .catch((error) => {

@@ -1,6 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, auth } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem } from "./firebaseSetup.js"
 
 export class Item {
     constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
@@ -101,8 +101,6 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         }
     })
 
-    fillUserItems(auth.currentUser.uid);
-
     addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage).then(() => {
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
@@ -147,6 +145,7 @@ export function fillUserItems(userID) {
             newCardDelete.innerHTML = "Delete"
             newCardDelete.addEventListener("click", () => {
                 deleteItem(itemCategory, itemID, userID, imageURL);
+                document.querySelector("#selfItemAccordionBody").removeChild(newCard);
             })
             newCardBody.appendChild(newCardDelete)
 

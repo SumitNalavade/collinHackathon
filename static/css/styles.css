@@ -152,6 +152,9 @@ main {
 .card .card-body {
   text-align: center;
 }
+.card .btn {
+  width: 80%;
+}
 .card .itemImage {
   width: 10em;
   height: 15em;

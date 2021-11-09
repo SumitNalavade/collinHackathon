@@ -141,7 +141,7 @@ export function fillUserItems(userID) {
             newCardBody.appendChild(newCardText)
 
             let newCardDelete = document.createElement("button")
-            newCardDelete.classList.add("btn", "btn-danger")
+            newCardDelete.classList.add("btn", "btn-danger", "deleteButton")
             newCardDelete.innerHTML = "Delete"
             newCardDelete.addEventListener("click", () => {
                 deleteItem(itemCategory, itemID, userID, imageURL);

@@ -132,6 +132,10 @@ main {
     text-align: center;
   }
 
+  .btn {
+    width: 80%;
+  }
+
   .itemImage {
     width: 10em;
     height: 15em;
@@ -150,6 +154,7 @@ main {
     width: 5em;
     height: 7.5em;
     object-fit: cover;
+
   }
 }
 

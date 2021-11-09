@@ -2,7 +2,6 @@ import { queryFeatured } from "./firebaseSetup.js";
 import { Item, Items } from "./app.js"
 
 function getFeatured(category) {
-    document.querySelector(`#${category}`).innerHTML = "";
 
     queryFeatured(category).then((items) => {
         items.forEach((doc) => {
@@ -12,9 +11,7 @@ function getFeatured(category) {
 
             let temp = `
             <div class="card" style="width: 20rem; border-radius: 20px;">
-            <div>
             <img src="${imageURL}" class="card-img-top itemImage" alt="...">
-            </div>
                         <div class="card-body">
                             <h5 class="card-title">${itemName}</h5>
                             <p class="card-text">${itemDescription}</p>

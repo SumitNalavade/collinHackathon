@@ -1,0 +1,33 @@
+nav {
+  a {
+    color: white !important;
+  }
+
+  .dropdown-menu {
+    background-color: $secondary-color !important;
+  }
+
+  .dropdown-item:hover {
+    background-color: $primary-color !important;
+  }
+
+  button:not(#navDonateButton) {
+    border: none;
+    margin: 0px 10px;
+  }
+
+  #profileIconButton,
+  #bagIconButton {
+    background-color: $secondary-color !important;
+    color: $primary-color;
+  }
+
+  #footerA {
+    font-size: 1rem;
+    margin: auto;
+
+    &:hover {
+      color: $primary-color !important;
+    }
+  }
+}

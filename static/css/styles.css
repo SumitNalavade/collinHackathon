@@ -1,15 +1,19 @@
 nav a {
   color: white !important;
 }
+nav a:hover {
+  color: #198754 !important;
+}
 nav .dropdown-menu {
   background-color: #212529 !important;
 }
 nav .dropdown-item:hover {
   background-color: #198754 !important;
+  color: white !important;
 }
-nav button:not(#navDonateButton) {
+nav button:not(#navDonateButton):not(#navLoginButton) {
   border: none;
-  margin: 0px 10px;
+  margin: 0px 5px;
 }
 nav #profileIconButton,
 nav #bagIconButton {
@@ -22,6 +26,12 @@ nav #footerA {
 }
 nav #footerA:hover {
   color: #198754 !important;
+}
+nav .custom-toggler.navbar-toggler {
+  border-color: white !important;
+}
+nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
 }
 
 .carousel-item {
@@ -92,10 +102,6 @@ form div {
   display: grid;
   grid-template-columns: 2;
   margin: 0.75em 0em;
-}
-form textarea,
-form input {
-  width: 100%;
 }
 form .accordion-body {
   padding: 0;

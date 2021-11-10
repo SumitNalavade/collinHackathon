@@ -17,9 +17,14 @@ form {
   flex-direction: column;
 
   div {
-    display: grid;
-    grid-template-columns: 2;
-    margin: 0.75em 0em;
+    display: flex;
+    flex-direction: column;
+
+    margin: 0.5em 0em;
+  }
+
+  label {
+    font-weight: bold;
   }
 
   .accordion-body {

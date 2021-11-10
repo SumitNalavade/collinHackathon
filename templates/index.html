@@ -87,21 +87,13 @@
         <!-- Carousel -->
         <section id="imagesCarousel">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="/static/firstModalImage.jpg" class="d-block w-100" alt="..." class="carousel">
                         <div class="carousel-caption text-start">
                             <h1><span class="brandHighlight">E</span>co<span class="brandHighlight">V</span>ille</h1>
                             <p>Reduce, Reuse, Recycle with your neighbors</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                            <p><a class="btn btn-lg btn-success" href="#">Sign up today</a></p>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -109,7 +101,7 @@
                         <div class="carousel-caption">
                             <h1>Reduce Environmental Pollution</h1>
                             <p>EcoVille provides the perfect platform for communities to unite against waste</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                            <p><a class="btn btn-lg btn-success" href="#">Learn more</a></p>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -117,7 +109,7 @@
                         <div class="carousel-caption">
                             <h1>One man's trash is another man's treasure</h1>
                             <p>EcoVille allows neighbors to reduce waste through repurposing goods.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                            <p><a class="btn btn-lg btn-success" href="#">Learn more</a></p>
                         </div>
                     </div>
                 </div>
@@ -235,7 +227,7 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="authForm">
+                        <div class="userInfoContainer">
                             <div>
                                 <label><strong>Name</strong></label>
                                 <p class="profileInfo" id="profileDisplayName"></p>
@@ -382,7 +374,7 @@
                 </div>
                 <div class="featuredCards" id="mensClothing">
                     <!-- Cards filled from Firebase -->
-
+                   
                     <div style="border-radius: 20px;" class="arrowDiv fa-2x">
                         <div class="fs-6 mb-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#198754"
@@ -404,6 +396,7 @@
                 </div>
                 <div class="featuredCards" id="womensClothing">
                     <!-- Cards filled from Firebase-->
+                    
 
                     <div style="border-radius: 20px;" class="arrowDiv fa-2x">
                         <div class="fs-6 mb-3">
@@ -513,13 +506,13 @@
         crossorigin="anonymous"></script>
 
         <!--
+      
+            
         -->
-   
+
         <script type="module" src="/static/js/firebaseSetup.js"></script>
         <script type="module" src="/static/js/app.js"></script>
         <script type="module" src="/static/js/ItemClass.js"></script>
-
-    
 
 </body>
 

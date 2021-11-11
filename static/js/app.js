@@ -93,7 +93,7 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
     const itemName = document.querySelector("#itemName")
     const itemDescription = document.querySelector("#itemDescription")
     let itemCategory = "";
-    const itemImage = document.querySelector('#imageInput').files[0];
+    const itemImage = document.querySelector('#imageInput');
 
     document.querySelectorAll(".form-check-input").forEach((button) => {
         if (button.checked) {
@@ -101,14 +101,14 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         }
     })
 
-    addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage).then(() => {
+    addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(() => {
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
             input.checked = false;
         })
     })
 
-    let inputs = [itemName, itemDescription]
+    let inputs = [itemName, itemDescription, itemImage]
 
     inputs.forEach((input) => {input.value = ""})
 })

@@ -103,9 +103,6 @@ form div {
   flex-direction: column;
   margin: 0.5em 0em;
 }
-form label {
-  font-weight: bold;
-}
 form .accordion-body {
   padding: 0;
 }
@@ -149,6 +146,10 @@ form .categories .form-check {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+label {
+  font-weight: bold;
 }
 
 .arrowDiv {

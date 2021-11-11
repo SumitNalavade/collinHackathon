@@ -23,10 +23,6 @@ form {
     margin: 0.5em 0em;
   }
 
-  label {
-    font-weight: bold;
-  }
-
   .accordion-body {
     padding: 0;
   }
@@ -77,6 +73,10 @@ form {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+label {
+  font-weight: bold;
 }
 
 .arrowDiv {

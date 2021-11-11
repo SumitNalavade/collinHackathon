@@ -20,11 +20,11 @@ nav #bagIconButton {
   background-color: #212529 !important;
   color: #198754;
 }
-nav #footerA {
+nav .footerA {
   font-size: 1rem;
   margin: auto;
 }
-nav #footerA:hover {
+nav .footerA:hover {
   color: #198754 !important;
 }
 nav .custom-toggler.navbar-toggler {

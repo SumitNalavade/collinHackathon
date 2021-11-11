@@ -163,11 +163,6 @@ export async function addNewItem(itemName, itemDescription, itemCategory, itemIm
             addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID)
                 .then(() => {
                     fillUserItems(auth.currentUser.uid)
-                    alert("Item added successfully");
-                })
-                .catch((error) => {
-                    alert("Error adding item");
-                    console.log(error);
                 })
         })
     })
@@ -200,10 +195,5 @@ export async function deleteItem(category, itemID, userID, imageURL) {
 
     const imageRef = ref(storage, imageURL);
 
-    deleteObject(imageRef).then(() => {
-        alert("Item removed succesfully")
-      }).catch((error) => {
-          alert("Error removing item")
-        console.log(error)
-      });
+    deleteObject(imageRef);
 }

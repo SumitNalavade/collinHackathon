@@ -70,17 +70,18 @@ export function successfulSignOut() {
 
 }
 
-document.querySelector("#signOutButton").addEventListener("click", (evt) => {
+document.querySelector("#signOutButton").addEventListener("click", () => {
     signOutUser();
 })
 
-function fillProfileModal() {
-    getCurrentUserProfile().then((currentUser) => {
-        document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`
-        document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName
-        document.querySelector("#profileEmail").innerHTML = currentUser.email
-        document.querySelector("#profileAddress").innerHTML = currentUser.address
-    })
+async function fillProfileModal() {
+    const currentUser = await getCurrentUserProfile();
+
+    document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`
+    document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName
+    document.querySelector("#profileEmail").innerHTML = currentUser.email
+    document.querySelector("#profileAddress").innerHTML = currentUser.address
+
 }
 
 document.querySelector("#resetPasswordButton").addEventListener("click", () => {
@@ -102,15 +103,18 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
     })
 
     addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(() => {
+        alert("Item added successfully");
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
             input.checked = false;
         })
+        let inputs = [itemName, itemDescription, itemImage]
+        inputs.forEach((input) => {input.value = ""})
     })
-
-    let inputs = [itemName, itemDescription, itemImage]
-
-    inputs.forEach((input) => {input.value = ""})
+    .catch((error) => {
+        console.log(error);
+        alert("Error adding item");
+    })
 })
 
 export function fillUserItems(userID) {
@@ -144,11 +148,17 @@ export function fillUserItems(userID) {
             newCardDelete.classList.add("btn", "btn-danger", "deleteButton")
             newCardDelete.innerHTML = "Delete"
             newCardDelete.addEventListener("click", () => {
-                deleteItem(itemCategory, itemID, userID, imageURL);
-                document.querySelector("#selfItemAccordionBody").removeChild(newCard);
-            })
-            newCardBody.appendChild(newCardDelete)
+                deleteItem(itemCategory, itemID, userID, imageURL).then(() => {
+                    alert("Item removed");
+                    document.querySelector("#selfItemAccordionBody").removeChild(newCard);
 
+                }).catch((error) => {
+                    console.log(error);
+                    alert("Error removing item");
+                })
+            })
+
+            newCardBody.appendChild(newCardDelete)
             document.querySelector("#selfItemAccordionBody").appendChild(newCard)
 
         })

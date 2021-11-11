@@ -19,7 +19,6 @@ nav {
   button:not(#navDonateButton):not(#navLoginButton) {
     border: none;
     margin: 0px 5px;
-
   }
 
   #profileIconButton,
@@ -28,7 +27,7 @@ nav {
     color: $primary-color;
   }
 
-  #footerA {
+  .footerA {
     font-size: 1rem;
     margin: auto;
 

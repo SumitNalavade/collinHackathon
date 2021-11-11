@@ -53,10 +53,6 @@
                     <li class="nav-item">
                         <a class="nav-link">All Items</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link">Learn More</a>
-                    </li>
                 </ul>
                 <button class="btn btn-success navAction" id="navLoginButton" type="button" data-bs-toggle="modal"
                     data-bs-target="#loginModal">Login</button>
@@ -482,9 +478,11 @@
         </div>
 
         <!-- Footer -->
-        <nav class="navbar sticky-bottom navbar-light bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand nav-link" id="footerA" href="#">© EcoVille 2021</a>
+        <nav class="navbar footer sticky-bottom navbar-light bg-dark">
+            <div class="container-fluid" style="display: flex; flex-direction: column;">
+                <a class="navbar-brand nav-link footerA" href="#">© EcoVille 2021</a>
+                <small><a class="navbar-brand nav-link footerA" href="#">Learn More</a></small>
+
             </div>
         </nav>
 
@@ -506,13 +504,12 @@
         crossorigin="anonymous"></script>
 
         <!--
-      
-            
         -->
 
         <script type="module" src="/static/js/firebaseSetup.js"></script>
         <script type="module" src="/static/js/app.js"></script>
         <script type="module" src="/static/js/ItemClass.js"></script>
+        
 
 </body>
 

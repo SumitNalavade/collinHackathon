@@ -1,10 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
 import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
-import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
-import { successfulSignIn, successfulSignOut } from "./app.js";
-import { fillUserItems } from "./app.js";
+import { successfulSignIn, successfulSignOut, fillUserItems } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -111,6 +110,27 @@ export function resetPassword() {
         .catch((error) => {
             alert("Error sending password reset email")
         });
+}
+
+export async function resetEmail (newEmail) {
+    const password = prompt("Please enter password");
+    
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
+
+    await reauthenticateWithCredential(auth.currentUser, credential).catch((error) => {
+        alert("Error reauthenticating");
+        console.log(error);
+      });
+
+
+    updateEmail(auth.currentUser, newEmail).then(() => {
+        alert("Email updated");
+    })
+    .catch((error) => {
+        alert("Error updating email");
+        console.log(error);
+    })
+
 }
 
 async function addItemsToUser(itemName, itemDescription, itemCategory, itemAddress, imageURL, itemID) {

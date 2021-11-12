@@ -1,5 +1,16 @@
 import { queryFeatured } from "./firebaseSetup.js";
-import { Item, Items } from "./app.js"
+import { Items } from "./app.js"
+
+export class Item {
+    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.itemAddress = itemAddress;
+        this.imageURL = imageURL;
+        this.userID = userID;
+    }
+}
 
 function getFeatured(category) {
 

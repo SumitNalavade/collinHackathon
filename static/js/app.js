@@ -1,17 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem } from "./firebaseSetup.js"
-
-export class Item {
-    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemCategory = itemCategory;
-        this.itemAddress = itemAddress;
-        this.imageURL = imageURL;
-        this.userID = userID;
-    }
-}
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail } from "./firebaseSetup.js"
 
 export const Items = {
     mensClothing: [],
@@ -86,6 +75,16 @@ async function fillProfileModal() {
 
 document.querySelector("#resetPasswordButton").addEventListener("click", () => {
     resetPassword()
+})
+
+document.querySelector(".bi-pencil").addEventListener("click", () => {
+    document.querySelector(".newEmailContainer").classList.toggle("d-none");
+})
+
+document.querySelector(".updateEmail").addEventListener("click", () => {
+    const newEmail = document.querySelector(".newEmail").value;
+
+    resetEmail(newEmail);
 })
 
 document.querySelector("#donateButton").addEventListener("click", (evt) => {

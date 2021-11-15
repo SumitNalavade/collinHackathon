@@ -1,0 +1,14 @@
+{
+  "name": "EcoVille",
+  "source": "templates/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "latest"
+  },
+  "dependencies": {
+    "firebase": "^9.4.1"
+  }
+}

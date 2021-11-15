@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"
-import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"
+import { initializeApp } from "firebase/app";
+import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "firebase/firestore"
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
 import { successfulSignIn, successfulSignOut, fillUserItems } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use

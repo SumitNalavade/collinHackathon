@@ -101,8 +101,11 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         }
     })
 
+    document.querySelector(".alert-warning").classList.toggle("d-none");
+
     addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(() => {
         alert("Item added successfully");
+        document.querySelector(".alert-warning").classList.toggle("d-none");
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
             input.checked = false;

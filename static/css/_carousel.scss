@@ -15,4 +15,10 @@
     filter: blur(1px);
     opacity: 0.8;
   }
+
+  @media only screen and (max-width: 976px) {
+    img {
+      height: 250px !important;
+    }
+  }
 }

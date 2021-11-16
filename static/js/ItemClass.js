@@ -2,13 +2,14 @@ import { queryFeatured } from "./firebaseSetup.js";
 import { Items } from "./app.js"
 
 export class Item {
-    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID) {
+    constructor(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID, itemID) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
         this.itemAddress = itemAddress;
         this.imageURL = imageURL;
         this.userID = userID;
+        this.itemID = itemID
     }
 }
 
@@ -16,8 +17,8 @@ function getFeatured(category) {
 
     queryFeatured(category).then((items) => {
         items.forEach((doc) => {
-            const { itemName, itemDescription, itemCategory, itemAddress, imageURL, userID } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, itemAddress, imageURL, userID)
+            const { itemName, itemDescription, itemCategory, address, imageURL, userID} = doc.data();
+            const newItem = new Item(itemName, itemDescription, itemCategory, address, imageURL, userID, doc.id)
             Items[itemCategory].push(newItem)
 
             let temp = `
@@ -31,11 +32,10 @@ function getFeatured(category) {
 
                     </div>
             `
-            document.querySelector(`#${category}`).innerHTML += temp
-
         });
 
     })
+
 }
 
 getFeatured("mensClothing");

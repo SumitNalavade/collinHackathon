@@ -176,16 +176,10 @@ async function addItemImage(image, imageName) {
 export async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
     const address = (await getCurrentUserProfile()).address;
 
-    addItemImage(itemImage, itemName).then((imageURL) => {
-        imageURL = imageURL;
-
-        addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL).then((itemID) => {
-            addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID)
-                .then(() => {
-                    fillUserItems(auth.currentUser.uid)
-                })
-        })
-    })
+    let imageURL = await addItemImage(itemImage, itemName);
+        let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL);
+            await addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID);
+                fillUserItems(auth.currentUser.uid);
 }
 
 export async function queryFeatured(category) {

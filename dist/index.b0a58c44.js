@@ -488,7 +488,7 @@ function getFeatured(category) {
                             <h5 class="card-title">${itemName}</h5>
                             <p class="card-text">${itemDescription}</p>
                         </div>
-                        <a href="#" class="btn btn-success">Add to cart</a>
+                        <a href="#" class="btn btn-success">Contact Owner</a>
 
                     </div>
             `;

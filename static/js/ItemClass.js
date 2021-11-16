@@ -31,7 +31,6 @@ function getFeatured(category) {
 
                     </div>
             `
-
             document.querySelector(`#${category}`).innerHTML += temp
 
         });

@@ -619,13 +619,10 @@ async function addItemImage(image, imageName) {
 }
 async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
     const address = (await getCurrentUserProfile()).address;
-    addItemImage(itemImage, itemName).then((imageURL)=>{
-        addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL).then((itemID)=>{
-            addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID).then(()=>{
-                _appJs.fillUserItems(auth.currentUser.uid);
-            });
-        });
-    });
+    let imageURL = await addItemImage(itemImage, itemName);
+    let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL);
+    await addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID);
+    _appJs.fillUserItems(auth.currentUser.uid);
 }
 async function queryFeatured(category) {
     const itemsRef = _firestore.collection(db, "items", category, "items");
@@ -646,187 +643,7 @@ async function deleteItem(category, itemID, userID, imageURL) {
     _storage.deleteObject(imageRef);
 }
 
-},{"./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","firebase/app":"eMZZo","firebase/firestore":"dwMEu","firebase/auth":"g8VIo","firebase/storage":"6Yvcj"}],"6w90M":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Items", ()=>Items
-);
-parcelHelpers.export(exports, "successfulSignIn", ()=>successfulSignIn
-);
-parcelHelpers.export(exports, "successfulSignOut", ()=>successfulSignOut
-);
-parcelHelpers.export(exports, "fillUserItems", ()=>fillUserItems
-);
-var _firebaseSetupJs = require("./firebaseSetup.js");
-"use strict";
-const Items = {
-    mensClothing: [],
-    womensClothing: [],
-    kidsClothing: [],
-    electronics: [],
-    furniture: []
-};
-document.querySelector("#signUpButton").addEventListener("click", (evt)=>{
-    evt.preventDefault();
-    const firstName = document.querySelector("#signupFirstName");
-    const lastName = document.querySelector("#signupLastName");
-    const email = document.querySelector("#signupEmail");
-    const password = document.querySelector("#signupPassword");
-    const address = document.querySelector("#signupAddress");
-    _firebaseSetupJs.signUpUser(firstName.value, lastName.value, email.value, password.value, address.value);
-    let inputs = [
-        firstName,
-        lastName,
-        email,
-        password,
-        address
-    ];
-    inputs.forEach((input)=>input.value = ""
-    );
-});
-document.querySelector("#loginButton").addEventListener("click", (evt)=>{
-    evt.preventDefault();
-    const email = document.querySelector("#emailLogin");
-    const password = document.querySelector("#passwordLogin");
-    _firebaseSetupJs.signInUser(email.value, password.value);
-    email.value = "";
-    password.value = "";
-});
-function successfulSignIn() {
-    document.querySelectorAll(".navAction").forEach((button)=>{
-        button.classList.toggle("d-none");
-    });
-    fillProfileModal();
-    document.querySelector(".btn-close").click();
-}
-function successfulSignOut() {
-    document.querySelector("#navLoginButton").classList.remove("d-none");
-    document.querySelector("#bagIconButton").classList.add("d-none");
-    document.querySelector("#navDonateButton").classList.add("d-none");
-    document.querySelector("#profileIconButton").classList.add("d-none");
-    document.querySelector("#closeModalButton").click();
-}
-document.querySelector("#signOutButton").addEventListener("click", ()=>{
-    _firebaseSetupJs.signOutUser();
-});
-async function fillProfileModal() {
-    const currentUser = await _firebaseSetupJs.getCurrentUserProfile();
-    document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`;
-    document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName;
-    document.querySelector("#profileEmail").innerHTML = currentUser.email;
-    document.querySelector("#profileAddress").innerHTML = currentUser.address;
-}
-document.querySelector("#resetPasswordButton").addEventListener("click", ()=>{
-    _firebaseSetupJs.resetPassword();
-});
-document.querySelector(".bi-pencil").addEventListener("click", ()=>{
-    document.querySelector(".newEmailContainer").classList.toggle("d-none");
-});
-document.querySelector(".updateEmail").addEventListener("click", ()=>{
-    const newEmail = document.querySelector(".newEmail").value;
-    _firebaseSetupJs.resetEmail(newEmail);
-});
-document.querySelector("#donateButton").addEventListener("click", (evt)=>{
-    evt.preventDefault();
-    const itemName = document.querySelector("#itemName");
-    const itemDescription = document.querySelector("#itemDescription");
-    let itemCategory = "";
-    const itemImage = document.querySelector('#imageInput');
-    document.querySelectorAll(".form-check-input").forEach((button)=>{
-        if (button.checked) itemCategory = button.value;
-    });
-    _firebaseSetupJs.addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(()=>{
-        alert("Item added successfully");
-        document.querySelector("#donateModalClose").click();
-        document.querySelectorAll(".donateInput").forEach((input)=>{
-            input.checked = false;
-        });
-        let inputs = [
-            itemName,
-            itemDescription,
-            itemImage
-        ];
-        inputs.forEach((input)=>{
-            input.value = "";
-        });
-    }).catch((error)=>{
-        console.log(error);
-        alert("Error adding item");
-    });
-});
-function fillUserItems(userID) {
-    document.querySelector("#selfItemAccordionBody").innerHTML = "";
-    _firebaseSetupJs.getUserItems(userID).then((items)=>{
-        items.forEach((doc)=>{
-            const { address , imageURL , itemCategory , itemDescription , itemName  } = doc.data();
-            const itemID = doc.id;
-            let newCard = document.createElement("div");
-            newCard.classList.add("card", "selfCard", "mb-3");
-            newCard.style.maxWidth = "540px";
-            let newCardImage = document.createElement("img");
-            newCardImage.setAttribute("src", imageURL);
-            newCardImage.classList.add("img-fluid", "rounded-start", "selfItemImage");
-            newCard.appendChild(newCardImage);
-            let newCardBody = document.createElement("div");
-            newCardBody.classList.add("card-body", "selfItemsCardBody");
-            newCard.appendChild(newCardBody);
-            let newCardTitle = document.createElement("h5");
-            newCardTitle.classList.add("card-title");
-            newCardTitle.innerHTML = itemName;
-            newCardBody.appendChild(newCardTitle);
-            let newCardText = document.createElement("p");
-            newCardText.classList.add("card-text");
-            newCardText.innerHTML = itemDescription;
-            newCardBody.appendChild(newCardText);
-            let newCardDelete = document.createElement("button");
-            newCardDelete.classList.add("btn", "btn-danger", "deleteButton");
-            newCardDelete.innerHTML = "Delete";
-            newCardDelete.addEventListener("click", ()=>{
-                _firebaseSetupJs.deleteItem(itemCategory, itemID, userID, imageURL).then(()=>{
-                    alert("Item removed");
-                    document.querySelector("#selfItemAccordionBody").removeChild(newCard);
-                }).catch((error)=>{
-                    console.log(error);
-                    alert("Error removing item");
-                });
-            });
-            newCardBody.appendChild(newCardDelete);
-            document.querySelector("#selfItemAccordionBody").appendChild(newCard);
-        });
-    });
-}
-
-},{"./firebaseSetup.js":"80OSe","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"ciiiV":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"eMZZo":[function(require,module,exports) {
+},{"firebase/app":"eMZZo","firebase/firestore":"dwMEu","firebase/auth":"g8VIo","firebase/storage":"6Yvcj","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"eMZZo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _app = require("@firebase/app");
@@ -3416,7 +3233,37 @@ function indicator(i) {
     else return service;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"arr7M":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"ciiiV":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"arr7M":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LogLevel", ()=>LogLevel1
@@ -34484,6 +34331,158 @@ function registerStorage() {
 }
 registerStorage();
 
-},{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["fEqy2","80OSe"], "80OSe", "parcelRequirea2cd")
+},{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"6w90M":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Items", ()=>Items
+);
+parcelHelpers.export(exports, "successfulSignIn", ()=>successfulSignIn
+);
+parcelHelpers.export(exports, "successfulSignOut", ()=>successfulSignOut
+);
+parcelHelpers.export(exports, "fillUserItems", ()=>fillUserItems
+);
+var _firebaseSetupJs = require("./firebaseSetup.js");
+"use strict";
+const Items = {
+    mensClothing: [],
+    womensClothing: [],
+    kidsClothing: [],
+    electronics: [],
+    furniture: []
+};
+document.querySelector("#signUpButton").addEventListener("click", (evt)=>{
+    evt.preventDefault();
+    const firstName = document.querySelector("#signupFirstName");
+    const lastName = document.querySelector("#signupLastName");
+    const email = document.querySelector("#signupEmail");
+    const password = document.querySelector("#signupPassword");
+    const address = document.querySelector("#signupAddress");
+    _firebaseSetupJs.signUpUser(firstName.value, lastName.value, email.value, password.value, address.value);
+    let inputs = [
+        firstName,
+        lastName,
+        email,
+        password,
+        address
+    ];
+    inputs.forEach((input)=>input.value = ""
+    );
+});
+document.querySelector("#loginButton").addEventListener("click", (evt)=>{
+    evt.preventDefault();
+    const email = document.querySelector("#emailLogin");
+    const password = document.querySelector("#passwordLogin");
+    _firebaseSetupJs.signInUser(email.value, password.value);
+    email.value = "";
+    password.value = "";
+});
+function successfulSignIn() {
+    document.querySelectorAll(".navAction").forEach((button)=>{
+        button.classList.toggle("d-none");
+    });
+    fillProfileModal();
+    document.querySelector(".btn-close").click();
+}
+function successfulSignOut() {
+    document.querySelector("#navLoginButton").classList.remove("d-none");
+    document.querySelector("#bagIconButton").classList.add("d-none");
+    document.querySelector("#navDonateButton").classList.add("d-none");
+    document.querySelector("#profileIconButton").classList.add("d-none");
+    document.querySelector("#closeModalButton").click();
+}
+document.querySelector("#signOutButton").addEventListener("click", ()=>{
+    _firebaseSetupJs.signOutUser();
+});
+async function fillProfileModal() {
+    const currentUser = await _firebaseSetupJs.getCurrentUserProfile();
+    document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`;
+    document.querySelector("#profileDisplayName").innerHTML = currentUser.displayName;
+    document.querySelector("#profileEmail").innerHTML = currentUser.email;
+    document.querySelector("#profileAddress").innerHTML = currentUser.address;
+}
+document.querySelector("#resetPasswordButton").addEventListener("click", ()=>{
+    _firebaseSetupJs.resetPassword();
+});
+document.querySelector(".bi-pencil").addEventListener("click", ()=>{
+    document.querySelector(".newEmailContainer").classList.toggle("d-none");
+});
+document.querySelector(".updateEmail").addEventListener("click", ()=>{
+    const newEmail = document.querySelector(".newEmail").value;
+    _firebaseSetupJs.resetEmail(newEmail);
+});
+document.querySelector("#donateButton").addEventListener("click", (evt)=>{
+    evt.preventDefault();
+    const itemName = document.querySelector("#itemName");
+    const itemDescription = document.querySelector("#itemDescription");
+    let itemCategory = "";
+    const itemImage = document.querySelector('#imageInput');
+    document.querySelectorAll(".form-check-input").forEach((button)=>{
+        if (button.checked) itemCategory = button.value;
+    });
+    document.querySelector(".alert-warning").classList.toggle("d-none");
+    _firebaseSetupJs.addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(()=>{
+        alert("Item added successfully");
+        document.querySelector(".alert-warning").classList.toggle("d-none");
+        document.querySelector("#donateModalClose").click();
+        document.querySelectorAll(".donateInput").forEach((input)=>{
+            input.checked = false;
+        });
+        let inputs = [
+            itemName,
+            itemDescription,
+            itemImage
+        ];
+        inputs.forEach((input)=>{
+            input.value = "";
+        });
+    }).catch((error)=>{
+        console.log(error);
+        alert("Error adding item");
+    });
+});
+function fillUserItems(userID) {
+    document.querySelector("#selfItemAccordionBody").innerHTML = "";
+    _firebaseSetupJs.getUserItems(userID).then((items)=>{
+        items.forEach((doc)=>{
+            const { address , imageURL , itemCategory , itemDescription , itemName  } = doc.data();
+            const itemID = doc.id;
+            let newCard = document.createElement("div");
+            newCard.classList.add("card", "selfCard", "mb-3");
+            newCard.style.maxWidth = "540px";
+            let newCardImage = document.createElement("img");
+            newCardImage.setAttribute("src", imageURL);
+            newCardImage.classList.add("img-fluid", "rounded-start", "selfItemImage");
+            newCard.appendChild(newCardImage);
+            let newCardBody = document.createElement("div");
+            newCardBody.classList.add("card-body", "selfItemsCardBody");
+            newCard.appendChild(newCardBody);
+            let newCardTitle = document.createElement("h5");
+            newCardTitle.classList.add("card-title");
+            newCardTitle.innerHTML = itemName;
+            newCardBody.appendChild(newCardTitle);
+            let newCardText = document.createElement("p");
+            newCardText.classList.add("card-text");
+            newCardText.innerHTML = itemDescription;
+            newCardBody.appendChild(newCardText);
+            let newCardDelete = document.createElement("button");
+            newCardDelete.classList.add("btn", "btn-danger", "deleteButton");
+            newCardDelete.innerHTML = "Delete";
+            newCardDelete.addEventListener("click", ()=>{
+                _firebaseSetupJs.deleteItem(itemCategory, itemID, userID, imageURL).then(()=>{
+                    alert("Item removed");
+                    document.querySelector("#selfItemAccordionBody").removeChild(newCard);
+                }).catch((error)=>{
+                    console.log(error);
+                    alert("Error removing item");
+                });
+            });
+            newCardBody.appendChild(newCardDelete);
+            document.querySelector("#selfItemAccordionBody").appendChild(newCard);
+        });
+    });
+}
+
+},{"./firebaseSetup.js":"80OSe","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["fEqy2","80OSe"], "80OSe", "parcelRequirea2cd")
 
 //# sourceMappingURL=index.e6b0d8b7.js.map

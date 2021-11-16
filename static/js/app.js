@@ -1,6 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail, resetAddress } from "./firebaseSetup.js"
 
 export const Items = {
     mensClothing: [],
@@ -77,14 +77,29 @@ document.querySelector("#resetPasswordButton").addEventListener("click", () => {
     resetPassword()
 })
 
-document.querySelector(".bi-pencil").addEventListener("click", () => {
+document.querySelector(".emailPencil").addEventListener("click", (evt) => {
     document.querySelector(".newEmailContainer").classList.toggle("d-none");
+})
+
+document.querySelector(".addressPencil").addEventListener("click", (evt) => {
+    document.querySelector(".newAddressContainer").classList.toggle("d-none");
 })
 
 document.querySelector(".updateEmail").addEventListener("click", () => {
     const newEmail = document.querySelector(".newEmail").value;
 
-    resetEmail(newEmail);
+    resetEmail(newEmail).then(() => {
+        fillProfileModal();
+    })
+})
+
+document.querySelector(".updateAddress").addEventListener("click", () => {
+    const newAddress = document.querySelector(".newAddress").value;
+
+    resetAddress(newAddress).then(() => {
+        fillProfileModal();
+    })
+    
 })
 
 document.querySelector("#donateButton").addEventListener("click", (evt) => {

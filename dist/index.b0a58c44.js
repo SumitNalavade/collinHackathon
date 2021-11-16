@@ -466,21 +466,20 @@ parcelHelpers.export(exports, "Item", ()=>Item
 var _firebaseSetupJs = require("./firebaseSetup.js");
 var _appJs = require("./app.js");
 class Item {
-    constructor(itemName1, itemDescription1, itemCategory1, itemAddress, imageURL1, userID1, itemID){
+    constructor(itemName1, itemDescription1, itemCategory1, itemAddress, imageURL1, userID1){
         this.itemName = itemName1;
         this.itemDescription = itemDescription1;
         this.itemCategory = itemCategory1;
         this.itemAddress = itemAddress;
         this.imageURL = imageURL1;
         this.userID = userID1;
-        this.itemID = itemID;
     }
 }
 function getFeatured(category) {
     _firebaseSetupJs.queryFeatured(category).then((items)=>{
         items.forEach((doc)=>{
             const { itemName , itemDescription , itemCategory , address , imageURL , userID  } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, address, imageURL, userID, doc.id);
+            const newItem = new Item(itemName, itemDescription, itemCategory, address, imageURL, userID);
             _appJs.Items[itemCategory].push(newItem);
             let temp = `
             <div class="card" style="width: 20rem; border-radius: 20px;">
@@ -493,6 +492,7 @@ function getFeatured(category) {
 
                     </div>
             `;
+            document.querySelector(`#${category}`).innerHTML += temp;
         });
     });
 }

@@ -475,6 +475,8 @@ parcelHelpers.export(exports, "resetPassword", ()=>resetPassword
 );
 parcelHelpers.export(exports, "resetEmail", ()=>resetEmail
 );
+parcelHelpers.export(exports, "resetAddress", ()=>resetAddress
+);
 parcelHelpers.export(exports, "addNewItem", ()=>addNewItem
 );
 parcelHelpers.export(exports, "queryFeatured", ()=>queryFeatured
@@ -585,6 +587,15 @@ async function resetEmail(newEmail) {
         alert("Email updated");
     }).catch((error)=>{
         alert("Error updating email");
+        console.log(error);
+    });
+}
+async function resetAddress(newAddress) {
+    await _firestore.setDoc(_firestore.doc(db, "users", auth.currentUser.uid), {
+        address: newAddress
+    }).then(()=>{
+        alert("Address Updated Successfully");
+    }).catch((error)=>{
         console.log(error);
     });
 }
@@ -34404,12 +34415,23 @@ async function fillProfileModal() {
 document.querySelector("#resetPasswordButton").addEventListener("click", ()=>{
     _firebaseSetupJs.resetPassword();
 });
-document.querySelector(".bi-pencil").addEventListener("click", ()=>{
+document.querySelector(".emailPencil").addEventListener("click", (evt)=>{
     document.querySelector(".newEmailContainer").classList.toggle("d-none");
+});
+document.querySelector(".addressPencil").addEventListener("click", (evt)=>{
+    document.querySelector(".newAddressContainer").classList.toggle("d-none");
 });
 document.querySelector(".updateEmail").addEventListener("click", ()=>{
     const newEmail = document.querySelector(".newEmail").value;
-    _firebaseSetupJs.resetEmail(newEmail);
+    _firebaseSetupJs.resetEmail(newEmail).then(()=>{
+        fillProfileModal();
+    });
+});
+document.querySelector(".updateAddress").addEventListener("click", ()=>{
+    const newAddress = document.querySelector(".newAddress").value;
+    _firebaseSetupJs.resetAddress(newAddress).then(()=>{
+        fillProfileModal();
+    });
 });
 document.querySelector("#donateButton").addEventListener("click", (evt)=>{
     evt.preventDefault();

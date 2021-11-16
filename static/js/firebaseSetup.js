@@ -133,6 +133,18 @@ export async function resetEmail (newEmail) {
 
 }
 
+export async function resetAddress(newAddress) {
+    await setDoc(doc(db, "users", auth.currentUser.uid), {
+        address: newAddress
+      }).then(() => {
+          alert("Address Updated Successfully");
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+      
+}
+
 async function addItemsToUser(itemName, itemDescription, itemCategory, itemAddress, imageURL, itemID) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
 

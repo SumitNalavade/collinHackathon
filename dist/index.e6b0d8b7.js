@@ -599,22 +599,20 @@ async function resetAddress(newAddress) {
         console.log(error);
     });
 }
-async function addItemsToUser(itemName, itemDescription, itemCategory, itemAddress, imageURL, itemID) {
+async function addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID) {
     const usersRef = _firestore.collection(db, "users", auth.currentUser.uid, "items");
     await _firestore.setDoc(_firestore.doc(usersRef, itemID), {
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        address: itemAddress,
         imageURL: imageURL
     });
 }
-async function addItemsCollection(itemName, itemDescription, itemCategory, itemAddress, imageURL) {
+async function addItemsCollection(itemName, itemDescription, itemCategory, imageURL) {
     const docRef = await _firestore.addDoc(_firestore.collection(db, "items", itemCategory, "items"), {
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        address: itemAddress,
         userID: String(auth.currentUser.uid),
         imageURL: imageURL
     });
@@ -629,10 +627,9 @@ async function addItemImage(image, imageName) {
     return imageURL;
 }
 async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
-    const address = (await getCurrentUserProfile()).address;
     let imageURL = await addItemImage(itemImage, itemName);
-    let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL);
-    await addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID);
+    let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, imageURL);
+    await addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID);
     _appJs.fillUserItems(auth.currentUser.uid);
 }
 async function queryFeatured(category) {
@@ -34412,25 +34409,21 @@ async function fillProfileModal() {
     document.querySelector("#profileEmail").innerHTML = currentUser.email;
     document.querySelector("#profileAddress").innerHTML = currentUser.address;
 }
-document.querySelector("#resetPasswordButton").addEventListener("click", ()=>{
-    _firebaseSetupJs.resetPassword();
-});
-document.querySelector(".emailPencil").addEventListener("click", (evt)=>{
-    document.querySelector(".newEmailContainer").classList.toggle("d-none");
-});
-document.querySelector(".addressPencil").addEventListener("click", (evt)=>{
-    document.querySelector(".newAddressContainer").classList.toggle("d-none");
-});
-document.querySelector(".updateEmail").addEventListener("click", ()=>{
-    const newEmail = document.querySelector(".newEmail").value;
-    _firebaseSetupJs.resetEmail(newEmail).then(()=>{
-        fillProfileModal();
+document.querySelectorAll(".bi-pencil").forEach((elm)=>{
+    elm.addEventListener("click", ()=>{
+        document.querySelectorAll(".resetContainer").forEach((container)=>{
+            container.classList.toggle("d-none");
+        });
     });
 });
-document.querySelector(".updateAddress").addEventListener("click", ()=>{
-    const newAddress = document.querySelector(".newAddress").value;
-    _firebaseSetupJs.resetAddress(newAddress).then(()=>{
-        fillProfileModal();
+document.querySelectorAll(".bi-check-square").forEach((button)=>{
+    button.addEventListener("click", ()=>{
+        let newEmail = document.querySelector("#newEmail");
+        let newAddress = document.querySelector("#newAddress");
+        if (button.id === "updateEmail") _firebaseSetupJs.resetEmail(newEmail.value);
+        else if (button.id === "updateAddress") _firebaseSetupJs.resetAddress(newAddress.value);
+        newEmail.value = "";
+        newAddress.value = "";
     });
 });
 document.querySelector("#donateButton").addEventListener("click", (evt)=>{

@@ -145,24 +145,22 @@ export async function resetAddress(newAddress) {
       
 }
 
-async function addItemsToUser(itemName, itemDescription, itemCategory, itemAddress, imageURL, itemID) {
+async function addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID) {
     const usersRef = collection(db, "users", auth.currentUser.uid, "items");
 
     await setDoc(doc(usersRef, itemID), {
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        address: itemAddress,
         imageURL: imageURL
     })
 }
 
-async function addItemsCollection(itemName, itemDescription, itemCategory, itemAddress, imageURL) {
+async function addItemsCollection(itemName, itemDescription, itemCategory, imageURL) {
     const docRef = await addDoc(collection(db, "items", itemCategory, "items"), {
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        address: itemAddress,
         userID: String(auth.currentUser.uid),
         imageURL: imageURL
     });
@@ -186,11 +184,9 @@ async function addItemImage(image, imageName) {
 }
 
 export async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
-    const address = (await getCurrentUserProfile()).address;
-
     let imageURL = await addItemImage(itemImage, itemName);
-        let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, address, imageURL);
-            await addItemsToUser(itemName, itemDescription, itemCategory, address, imageURL, itemID);
+        let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, imageURL);
+            await addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID);
                 fillUserItems(auth.currentUser.uid);
 }
 

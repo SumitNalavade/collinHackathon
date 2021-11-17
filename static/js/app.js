@@ -73,33 +73,28 @@ async function fillProfileModal() {
 
 }
 
-document.querySelector("#resetPasswordButton").addEventListener("click", () => {
-    resetPassword()
-})
-
-document.querySelector(".emailPencil").addEventListener("click", (evt) => {
-    document.querySelector(".newEmailContainer").classList.toggle("d-none");
-})
-
-document.querySelector(".addressPencil").addEventListener("click", (evt) => {
-    document.querySelector(".newAddressContainer").classList.toggle("d-none");
-})
-
-document.querySelector(".updateEmail").addEventListener("click", () => {
-    const newEmail = document.querySelector(".newEmail").value;
-
-    resetEmail(newEmail).then(() => {
-        fillProfileModal();
+document.querySelectorAll(".bi-pencil").forEach((elm) => {
+    elm.addEventListener("click", () => {
+        document.querySelectorAll(".resetContainer").forEach((container) => {
+            container.classList.toggle("d-none");
+        })
     })
 })
 
-document.querySelector(".updateAddress").addEventListener("click", () => {
-    const newAddress = document.querySelector(".newAddress").value;
+document.querySelectorAll(".bi-check-square").forEach((button) => {
+    button.addEventListener("click", () => {
+        let newEmail = document.querySelector("#newEmail");
+        let newAddress = document.querySelector("#newAddress")
 
-    resetAddress(newAddress).then(() => {
-        fillProfileModal();
+        if(button.id === "updateEmail") {
+            resetEmail(newEmail.value);
+        } else if (button.id === "updateAddress") {
+            resetAddress(newAddress.value);
+        }
+
+        newEmail.value = "";
+        newAddress.value = "";
     })
-    
 })
 
 document.querySelector("#donateButton").addEventListener("click", (evt) => {

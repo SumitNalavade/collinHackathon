@@ -90,6 +90,11 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   height: 7.5em;
 }
 
+.categoryCards {
+  display: flex;
+  justify-content: center;
+}
+
 .brandHighlight {
   color: #198754;
 }

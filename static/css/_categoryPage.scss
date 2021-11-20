@@ -1,0 +1,13 @@
+.categoryCards {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+
+    max-width: 1800px;
+    width: 90%;
+
+    .card {
+        margin: 1.5em;
+    }
+}

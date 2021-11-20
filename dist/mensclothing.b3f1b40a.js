@@ -579,7 +579,7 @@ function fillUserItems(userID) {
     document.querySelector("#selfItemAccordionBody").innerHTML = "";
     _firebaseSetupJs.getUserItems(userID).then((items)=>{
         items.forEach((doc)=>{
-            const { imageURL , itemCategory , itemDescription , itemName  } = doc.data();
+            const { address , imageURL , itemCategory , itemDescription , itemName  } = doc.data();
             const itemID = doc.id;
             let newCard = document.createElement("div");
             newCard.classList.add("card", "selfCard", "mb-3");
@@ -616,6 +616,13 @@ function fillUserItems(userID) {
         });
     });
 }
+document.querySelectorAll(".category").forEach((cat)=>{
+    cat.addEventListener("click", (evt)=>{
+        document.addEventListener('DOMContentLoaded', function(event) {
+            alert("fdsadsd");
+        });
+    });
+});
 
 },{"./firebaseSetup.js":"80OSe","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"80OSe":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -643,8 +650,6 @@ parcelHelpers.export(exports, "queryFeatured", ()=>queryFeatured
 parcelHelpers.export(exports, "getUserItems", ()=>getUserItems
 );
 parcelHelpers.export(exports, "deleteItem", ()=>deleteItem
-);
-parcelHelpers.export(exports, "getCategoryPageItems", ()=>getCategoryPageItems
 );
 // Import the functions you need from the SDKs you need
 var _app = require("firebase/app");
@@ -810,12 +815,6 @@ async function deleteItem(category, itemID, userID, imageURL) {
     await _firestore.deleteDoc(_firestore.doc(db, "users", userID, "items", itemID));
     const imageRef = _storage.ref(storage, imageURL);
     _storage.deleteObject(imageRef);
-}
-async function getCategoryPageItems(category) {
-    const itemsRef = _firestore.collection(db, "items", category, "items");
-    const q = _firestore.query(itemsRef);
-    const querySnapshot = await _firestore.getDocs(q);
-    return querySnapshot;
 }
 
 },{"firebase/app":"eMZZo","firebase/firestore":"dwMEu","firebase/auth":"g8VIo","firebase/storage":"6Yvcj","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"eMZZo":[function(require,module,exports) {
@@ -34508,4 +34507,4 @@ registerStorage();
 
 },{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["6ppmh","6w90M"], "6w90M", "parcelRequirea2cd")
 
-//# sourceMappingURL=index.b3f1b40a.js.map
+//# sourceMappingURL=mensclothing.b3f1b40a.js.map

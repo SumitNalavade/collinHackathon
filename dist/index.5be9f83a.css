@@ -90,6 +90,13 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
 .categoryCards {
   display: flex;
   justify-content: center;
+  align-self: center;
+  flex-wrap: wrap;
+  max-width: 1800px;
+  width: 90%;
+}
+.categoryCards .card {
+  margin: 1.5em;
 }
 .brandHighlight {
   color: #198754;

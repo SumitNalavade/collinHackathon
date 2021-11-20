@@ -134,7 +134,7 @@ export function fillUserItems(userID) {
 
     getUserItems(userID).then((items) => {
         items.forEach((doc) => {
-            const { address, imageURL, itemCategory, itemDescription, itemName } = doc.data();
+            const { imageURL, itemCategory, itemDescription, itemName } = doc.data();
             const itemID = doc.id;
 
             let newCard = document.createElement("div");

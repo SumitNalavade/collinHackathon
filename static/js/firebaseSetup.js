@@ -219,3 +219,13 @@ export async function deleteItem(category, itemID, userID, imageURL) {
 
     deleteObject(imageRef);
 }
+
+export async function getCategoryPageItems(category) {
+    const itemsRef = collection(db, "items", category, "items");
+
+    const q = query(itemsRef);
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot
+}

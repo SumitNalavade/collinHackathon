@@ -29,21 +29,21 @@
                             Clothing
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="/mensclothing.html">Men</a></li>
-                            <li><a class="dropdown-item" href="#">Women</a></li>
-                            <li><a class="dropdown-item" href="#">Kids</a></li>
+                            <li><a class="dropdown-item category" href="/mensclothing.html" aria-label="mensClothing">Men</a></li>
+                            <li><a class="dropdown-item category" href="/womensclothing.html" aria-label="womensClothing">Women</a></li>
+                            <li><a class="dropdown-item category" href="/kidsclothing.html" aria-label="kidsClothing">Kids</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Electronics</a>
+                        <a class="nav-link category" href="/electronics.html" aria-label="electronics">Electronics</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link">Furniture</a>
+                        <a class="nav-link category" aria-label="furniture" href="/furniture.html">Furniture</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link">All Items</a>
+                        <a class="nav-link category" aria-label="all" href="/all.html">All Items</a>
                     </li>
                 </ul>
                 <button class="btn btn-success navAction" id="navLoginButton" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
@@ -315,24 +315,10 @@
             </div>
         </div>
 
-        <section class="categoryCards">
-            <div class="card" style="width: 20rem; border-radius: 20px;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/fir-demo-5c6da.appspot.com/o/Juice%20WRLD%20Tee?alt=media&amp;token=dea1fcb7-c733-40d9-ad35-f4b7e56c0910" class="card-img-top itemImage" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Juice WRLD Tee</h5>
-                                <p class="card-text">Lightly Used, Size M</p>
-                            </div>
-                            <a href="#" class="btn btn-success">Contact Owner</a>
-            </div>
+        <!-- Items Section -->
 
-            <div class="card" style="width: 20rem; border-radius: 20px;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/fir-demo-5c6da.appspot.com/o/2016%20Cavaliers%20Championship%20Hoodie?alt=media&amp;token=c85ec91e-374f-48db-98b4-f1e6f2e017d4" class="card-img-top itemImage" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">2016 Cavaliers Championship Hoodie</h5>
-                                <p class="card-text">Never worn, New condition</p>
-                            </div>
-                            <a href="#" class="btn btn-success">Contact Owner</a>
-            </div>
+        <section class="categoryCards">
+            
         </section>
 
         <!-- Footer -->
@@ -351,7 +337,13 @@
            
         -->
         
-        <script src="/index.b3f1b40a.js" defer=""></script>       
+        <script src="/index.b3f1b40a.js" defer=""></script>      
+        
+        <script>const category = "mensClothing";
+
+</script>
+
+        <script src="/mensclothing.24a4ab1a.js" defer=""></script>
 </body>
 
 </html>

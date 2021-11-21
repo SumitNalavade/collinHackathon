@@ -497,6 +497,7 @@ function getFeatured(category) {
 }
 getFeatured("mensClothing");
 getFeatured("womensClothing");
+getFeatured("kidsClothing");
 
 },{"./firebaseSetup.js":"80OSe","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1kH6n","29tur"], "29tur", "parcelRequirea2cd")
 

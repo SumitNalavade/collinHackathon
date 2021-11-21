@@ -39,3 +39,4 @@ function getFeatured(category) {
 
 getFeatured("mensClothing");
 getFeatured("womensClothing");
+getFeatured("kidsClothing");

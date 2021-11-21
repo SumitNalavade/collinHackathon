@@ -40,3 +40,5 @@ function getFeatured(category) {
 getFeatured("mensClothing");
 getFeatured("womensClothing");
 getFeatured("kidsClothing");
+getFeatured("electronics");
+getFeatured("furniture");

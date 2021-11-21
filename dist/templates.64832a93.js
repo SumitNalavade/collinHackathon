@@ -140,12 +140,12 @@
       this[globalName] = mainExports;
     }
   }
-})({"1kH6n":[function(require,module,exports) {
+})({"5RLYt":[function(require,module,exports) {
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "4a236f9275d0a351";
-module.bundle.HMR_BUNDLE_ID = "2d351651b0a58c44";
+module.bundle.HMR_BUNDLE_ID = "3c1054a664832a93";
 "use strict";
 function _createForOfIteratorHelper(o, allowArrayLike) {
     var it;
@@ -458,49 +458,8 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"29tur":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Item", ()=>Item
-);
-var _firebaseSetupJs = require("./firebaseSetup.js");
-var _appJs = require("./app.js");
-class Item {
-    constructor(itemName1, itemDescription1, itemCategory1, imageURL1, userID1){
-        this.itemName = itemName1;
-        this.itemDescription = itemDescription1;
-        this.itemCategory = itemCategory1;
-        this.imageURL = imageURL1;
-        this.userID = userID1;
-    }
-}
-function getFeatured(category) {
-    _firebaseSetupJs.queryFeatured(category).then((items)=>{
-        items.forEach((doc)=>{
-            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID);
-            _appJs.Items[itemCategory].push(newItem);
-            let temp = `
-            <div class="card" style="width: 20rem; border-radius: 20px;">
-            <img src="${imageURL}" class="card-img-top itemImage" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${itemName}</h5>
-                            <p class="card-text">${itemDescription}</p>
-                        </div>
-                        <a href="#" class="btn btn-success">Contact Owner</a>
+},{}],"b9k3F":[function(require,module,exports) {
 
-                    </div>
-            `;
-            document.querySelector(`#${category}`).innerHTML += temp;
-        });
-    });
-}
-getFeatured("mensClothing");
-getFeatured("womensClothing");
-getFeatured("kidsClothing");
-getFeatured("electronics");
-getFeatured("furniture");
+},{}]},["5RLYt","b9k3F"], "b9k3F", "parcelRequirea2cd")
 
-},{"./firebaseSetup.js":"80OSe","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1kH6n","29tur"], "29tur", "parcelRequirea2cd")
-
-//# sourceMappingURL=index.b0a58c44.js.map
+//# sourceMappingURL=templates.64832a93.js.map

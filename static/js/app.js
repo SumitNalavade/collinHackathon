@@ -51,7 +51,6 @@ export function successfulSignIn() {
 
 export function successfulSignOut() {
     document.querySelector("#navLoginButton").classList.remove("d-none");
-    document.querySelector("#bagIconButton").classList.add("d-none");
     document.querySelector("#navDonateButton").classList.add("d-none");
     document.querySelector("#profileIconButton").classList.add("d-none");
 

@@ -21,10 +21,9 @@ nav {
     margin-left: 15px;
   }
 
-  #profileIconButton,
-  #bagIconButton {
+  #profileIconButton {
     background-color: $secondary-color !important;
-    color: $primary-color;
+    color: $primary-color !important;
   }
 
   .footerA {

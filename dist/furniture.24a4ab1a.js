@@ -140,12 +140,12 @@
       this[globalName] = mainExports;
     }
   }
-})({"1kH6n":[function(require,module,exports) {
+})({"k9puv":[function(require,module,exports) {
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "4a236f9275d0a351";
-module.bundle.HMR_BUNDLE_ID = "2d351651b0a58c44";
+module.bundle.HMR_BUNDLE_ID = "3103fed224a4ab1a";
 "use strict";
 function _createForOfIteratorHelper(o, allowArrayLike) {
     var it;
@@ -458,28 +458,12 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"29tur":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Item", ()=>Item
-);
+},{}],"kWhWf":[function(require,module,exports) {
 var _firebaseSetupJs = require("./firebaseSetup.js");
-var _appJs = require("./app.js");
-class Item {
-    constructor(itemName1, itemDescription1, itemCategory1, imageURL1, userID1){
-        this.itemName = itemName1;
-        this.itemDescription = itemDescription1;
-        this.itemCategory = itemCategory1;
-        this.imageURL = imageURL1;
-        this.userID = userID1;
-    }
-}
-function getFeatured(category) {
-    _firebaseSetupJs.queryFeatured(category).then((items)=>{
+window.addEventListener("DOMContentLoaded", ()=>{
+    _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
         items.forEach((doc)=>{
-            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID);
-            _appJs.Items[itemCategory].push(newItem);
+            const { imageURL , itemDescription , itemName  } = doc.data();
             let cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
             cardDiv.style.width = "20rem";
@@ -502,20 +486,12 @@ function getFeatured(category) {
             let contactButton = document.createElement("button");
             contactButton.classList.add("btn", "btn-success");
             contactButton.innerHTML = "Details";
-            contactButton.addEventListener("click", ()=>{
-                contactOwner();
-            });
             cardDiv.appendChild(contactButton);
-            document.querySelector(`#${category}`).appendChild(cardDiv);
+            document.querySelector(".categoryCards").appendChild(cardDiv);
         });
     });
-}
-getFeatured("mensClothing");
-getFeatured("womensClothing");
-getFeatured("kidsClothing");
-getFeatured("electronics");
-getFeatured("furniture");
+});
 
-},{"./firebaseSetup.js":"80OSe","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1kH6n","29tur"], "29tur", "parcelRequirea2cd")
+},{"./firebaseSetup.js":"80OSe"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
 
-//# sourceMappingURL=index.b0a58c44.js.map
+//# sourceMappingURL=furniture.24a4ab1a.js.map

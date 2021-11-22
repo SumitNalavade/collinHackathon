@@ -79,7 +79,7 @@ form {
 .featuredCards {
   display: flex;
   justify-content: space-evenly;
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
 }
 
 label {
@@ -94,6 +94,18 @@ label {
 
   width: 100%;
   margin: auto;
+
+  a {
+    display: flex;
+    align-items: center;
+    
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: $primary-color
+    }
+  }
 }
 
 @media only screen and (max-width: 976px) {

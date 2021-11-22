@@ -19,19 +19,41 @@ function getFeatured(category) {
             const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID)
             Items[itemCategory].push(newItem)
 
-            let temp = `
-            <div class="card" style="width: 20rem; border-radius: 20px;">
-            <img src="${imageURL}" class="card-img-top itemImage" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${itemName}</h5>
-                            <p class="card-text">${itemDescription}</p>
-                        </div>
-                        <a href="#" class="btn btn-success">Contact Owner</a>
+            let cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+            cardDiv.style.width = "20rem";
+            cardDiv.style.borderRadius = "20px";
 
-                    </div>
-            `
-            document.querySelector(`#${category}`).innerHTML += temp
+            let image = document.createElement("img");
+            image.classList.add("card-img-top", "itemImage");
+            image.setAttribute("src", imageURL);
+            cardDiv.appendChild(image);
 
+            let cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            cardDiv.appendChild(cardBody);
+
+            let cardTitle = document.createElement("h5");
+            cardTitle.classList.add("card-title");
+            cardTitle.innerHTML = itemName;
+            cardBody.appendChild(cardTitle);
+
+            let cardText = document.createElement("p");
+            cardText.classList.add("card-text");
+            cardText.innerHTML = itemDescription;
+            cardBody.appendChild(cardText);
+
+            let contactButton = document.createElement("button");
+            contactButton.classList.add("btn", "btn-success");
+            contactButton.innerHTML = "Details";
+
+            contactButton.addEventListener("click", () => {
+                contactOwner();
+            })
+
+            cardDiv.appendChild(contactButton)
+
+            document.querySelector(`#${category}`).appendChild(cardDiv);
         });
 
     })

@@ -15,10 +15,9 @@ nav button:not(#navDonateButton):not(#navLoginButton) {
   border: none;
   margin-left: 15px;
 }
-nav #profileIconButton,
-nav #bagIconButton {
+nav #profileIconButton {
   background-color: #212529 !important;
-  color: #198754;
+  color: #198754 !important;
 }
 nav .footerA {
   font-size: 1rem;
@@ -96,7 +95,7 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   width: 90%;
 }
 .categoryCards .card {
-  margin: 1.5em;
+  margin: 1.5em 2em;
 }
 .brandHighlight {
   color: #198754;
@@ -167,6 +166,15 @@ label {
   order: 999;
   width: 100%;
   margin: auto;
+}
+.arrowDiv a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+.arrowDiv a:hover {
+  color: #198754;
 }
 @media only screen and (max-width: 976px) {
   form .categories {

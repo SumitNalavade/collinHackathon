@@ -3,7 +3,7 @@ import { getCategoryPageItems } from "./firebaseSetup.js"
 window.addEventListener("DOMContentLoaded", () => {
     getCategoryPageItems(category).then((items) => {
         items.forEach((doc) => {
-            const { imageURL, itemCategory, itemDescription, itemName } = doc.data();
+            const { imageURL, itemDescription, itemName } = doc.data();
 
             let temp = `
             <div class="card" style="width: 20rem; border-radius: 20px;">

@@ -460,38 +460,17 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"kWhWf":[function(require,module,exports) {
 var _firebaseSetupJs = require("./firebaseSetup.js");
+var _appJs = require("./app.js");
+var _itemClassJs = require("./ItemClass.js");
 window.addEventListener("DOMContentLoaded", ()=>{
     _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
         items.forEach((doc)=>{
-            const { imageURL , itemDescription , itemName  } = doc.data();
-            let cardDiv = document.createElement("div");
-            cardDiv.classList.add("card");
-            cardDiv.style.width = "20rem";
-            cardDiv.style.borderRadius = "20px";
-            let image = document.createElement("img");
-            image.classList.add("card-img-top", "itemImage");
-            image.setAttribute("src", imageURL);
-            cardDiv.appendChild(image);
-            let cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-            cardDiv.appendChild(cardBody);
-            let cardTitle = document.createElement("h5");
-            cardTitle.classList.add("card-title");
-            cardTitle.innerHTML = itemName;
-            cardBody.appendChild(cardTitle);
-            let cardText = document.createElement("p");
-            cardText.classList.add("card-text");
-            cardText.innerHTML = itemDescription;
-            cardBody.appendChild(cardText);
-            let contactButton = document.createElement("button");
-            contactButton.classList.add("btn", "btn-success");
-            contactButton.innerHTML = "Details";
-            cardDiv.appendChild(contactButton);
-            document.querySelector(".categoryCards").appendChild(cardDiv);
+            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
+            document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(imageURL, itemDescription, itemName, doc.id));
         });
     });
 });
 
-},{"./firebaseSetup.js":"80OSe"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
+},{"./firebaseSetup.js":"80OSe","./app.js":"6w90M","./ItemClass.js":"29tur"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
 
 //# sourceMappingURL=furniture.24a4ab1a.js.map

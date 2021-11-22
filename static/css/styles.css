@@ -101,6 +101,19 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   margin: 1.5em 2em;
 }
 
+.itemDetailsModalBody {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.itemDetailsModalBody img {
+  width: 5em;
+  height: 7.5em;
+}
+.itemDetailsModalBody .itemDetailsDiv div {
+  display: flex;
+  flex-direction: column;
+}
+
 .brandHighlight {
   color: #198754;
 }

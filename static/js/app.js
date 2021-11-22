@@ -176,6 +176,54 @@ export function fillUserItems(userID) {
     })
 }
 
+export function createItemCards(imageURL, itemDescription, itemName, userID) {
+    let cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+            cardDiv.style.width = "20rem";
+            cardDiv.style.borderRadius = "20px";
+
+            let image = document.createElement("img");
+            image.classList.add("card-img-top", "itemImage");
+            image.setAttribute("src", imageURL);
+            cardDiv.appendChild(image);
+
+            let cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            cardDiv.appendChild(cardBody);
+
+            let cardTitle = document.createElement("h5");
+            cardTitle.classList.add("card-title");
+            cardTitle.innerHTML = itemName;
+            cardBody.appendChild(cardTitle);
+
+            let cardText = document.createElement("p");
+            cardText.classList.add("card-text");
+            cardText.innerHTML = itemDescription;
+            cardBody.appendChild(cardText);
+
+            let contactButton = document.createElement("button");
+            contactButton.classList.add("btn", "btn-success");
+            contactButton.innerHTML = "Details";
+            contactButton.setAttribute("data-bs-toggle", "modal");
+            contactButton.setAttribute("data-bs-target", "#itemDetailsModal");
+
+            contactButton.addEventListener("click", function (evt) {
+                console.log(evt);
+            })
+
+            cardDiv.appendChild(contactButton)
+
+    return cardDiv
+}
+
+function fillItemDetailsModal(itemName, imageURL, itemDescription, userEmail, userAddress, itemID) {
+    document.querySelector("#itemDetailImage").setAttribute("img", imageURL);
+    document.querySelector("#itemDetailTitle").innerHTML = itemName;
+    document.querySelector("#itemDetailDescription").innerHTML = itemDescription
+    document.querySelector("#itemDetailEmail").innerHTML = userEmail;
+    document.querySelector("#itemDetailAddress").innerHTML = userAddress;
+}
+
 
 
 

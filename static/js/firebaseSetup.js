@@ -152,7 +152,7 @@ async function addItemsToUser(itemName, itemDescription, itemCategory, imageURL,
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        imageURL: imageURL
+        imageURL: imageURL,
     })
 }
 
@@ -196,7 +196,7 @@ export async function queryFeatured(category) {
     const q = query(itemsRef, limit(4));
 
     const querySnapshot = await getDocs(q);
-
+    
     return querySnapshot
 }
 

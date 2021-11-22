@@ -466,47 +466,22 @@ parcelHelpers.export(exports, "Item", ()=>Item
 var _firebaseSetupJs = require("./firebaseSetup.js");
 var _appJs = require("./app.js");
 class Item {
-    constructor(itemName1, itemDescription1, itemCategory1, imageURL1, userID1){
+    constructor(itemName1, itemDescription1, itemCategory1, imageURL1, userID1, itemID){
         this.itemName = itemName1;
         this.itemDescription = itemDescription1;
         this.itemCategory = itemCategory1;
         this.imageURL = imageURL1;
         this.userID = userID1;
+        this.itemID = itemID;
     }
 }
 function getFeatured(category) {
     _firebaseSetupJs.queryFeatured(category).then((items)=>{
         items.forEach((doc)=>{
             const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID);
+            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
             _appJs.Items[itemCategory].push(newItem);
-            let cardDiv = document.createElement("div");
-            cardDiv.classList.add("card");
-            cardDiv.style.width = "20rem";
-            cardDiv.style.borderRadius = "20px";
-            let image = document.createElement("img");
-            image.classList.add("card-img-top", "itemImage");
-            image.setAttribute("src", imageURL);
-            cardDiv.appendChild(image);
-            let cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-            cardDiv.appendChild(cardBody);
-            let cardTitle = document.createElement("h5");
-            cardTitle.classList.add("card-title");
-            cardTitle.innerHTML = itemName;
-            cardBody.appendChild(cardTitle);
-            let cardText = document.createElement("p");
-            cardText.classList.add("card-text");
-            cardText.innerHTML = itemDescription;
-            cardBody.appendChild(cardText);
-            let contactButton = document.createElement("button");
-            contactButton.classList.add("btn", "btn-success");
-            contactButton.innerHTML = "Details";
-            contactButton.addEventListener("click", ()=>{
-                contactOwner();
-            });
-            cardDiv.appendChild(contactButton);
-            document.querySelector(`#${category}`).appendChild(cardDiv);
+            document.querySelector(`#${category}`).appendChild(_appJs.createItemCards(imageURL, itemDescription, itemName, doc.id));
         });
     });
 }

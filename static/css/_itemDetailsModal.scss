@@ -1,0 +1,16 @@
+.itemDetailsModalBody {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    img {
+        width: 5em;
+        height: 7.5em;
+    }
+
+    .itemDetailsDiv {
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

@@ -3,7 +3,7 @@
 import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail, resetAddress, queryFeatured, getUser } from "./firebaseSetup.js"
 import { Item } from "./ItemClass.js";
 
-export const Items = {
+export let Items = {
     mensClothing: [],
     womensClothing: [],
     kidsClothing: [],

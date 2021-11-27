@@ -1,8 +1,8 @@
 import { Item } from "./ItemClass.js";
 import { getCategoryPageItems } from "./firebaseSetup.js"
-import { createItemCards, Items } from "./app.js"
+import { createItemCards } from "./app.js"
 
-Items = {
+let Items = {
     mensClothing: [],
     womensClothing: [],
     kidsClothing: [],

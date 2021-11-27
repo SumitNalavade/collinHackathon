@@ -462,7 +462,7 @@ function hmrAcceptRun(bundle, id) {
 var _itemClassJs = require("./ItemClass.js");
 var _firebaseSetupJs = require("./firebaseSetup.js");
 var _appJs = require("./app.js");
-Items = {
+let Items = {
     mensClothing: [],
     womensClothing: [],
     kidsClothing: [],
@@ -473,7 +473,7 @@ _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
     items.forEach((doc)=>{
         const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
         const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
-        _appJs.Items[itemCategory].push(newItem);
+        Items[itemCategory].push(newItem);
         document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
     });
 });

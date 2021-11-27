@@ -476,7 +476,7 @@ parcelHelpers.export(exports, "createItemCards", ()=>createItemCards
 var _firebaseSetupJs = require("./firebaseSetup.js");
 var _itemClassJs = require("./ItemClass.js");
 "use strict";
-const Items = {
+let Items = {
     mensClothing: [],
     womensClothing: [],
     kidsClothing: [],

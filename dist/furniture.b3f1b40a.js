@@ -467,6 +467,8 @@ parcelHelpers.export(exports, "successfulSignIn", ()=>successfulSignIn
 );
 parcelHelpers.export(exports, "successfulSignOut", ()=>successfulSignOut
 );
+parcelHelpers.export(exports, "fillProfileModal", ()=>fillProfileModal
+);
 parcelHelpers.export(exports, "fillUserItems", ()=>fillUserItems
 );
 parcelHelpers.export(exports, "createItemCards", ()=>createItemCards
@@ -724,6 +726,7 @@ function signUpUser(firstName, lastName, email, password, address) {
             displayName: `${firstName} ${lastName}`
         }).then(()=>createUsersDoc(firstName, lastName, address, String(user.uid))
         ).then(()=>{
+            _appJs.fillProfileModal();
             _auth.sendEmailVerification(user);
         }).then(()=>{
             alert("New user created");

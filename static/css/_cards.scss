@@ -22,9 +22,8 @@
   }
 
   .itemImage {
-    width: 10em;
     height: 15em;
-    object-fit: cover;
+    object-fit: contain;
 
     margin: auto;
   }
@@ -39,7 +38,6 @@
   .selfItemImage {
     @extend .itemImage;
     
-    width: 5em;
-    height: 7.5em;
+    height: 10em;
   }
 }

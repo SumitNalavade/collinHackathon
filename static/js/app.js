@@ -20,7 +20,7 @@ document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     const address = document.querySelector("#signupAddress")
    
     signUpUser(firstName.value, lastName.value, email.value, password.value, address.value)
-
+    
     let inputs = [firstName, lastName, email, password, address]
 
     inputs.forEach((input) => input.value = "")
@@ -62,7 +62,7 @@ document.querySelector("#signOutButton").addEventListener("click", () => {
     signOutUser();
 })
 
-async function fillProfileModal() {
+export async function fillProfileModal() {
     const currentUser = await getCurrentUserProfile();
 
     document.querySelector("#profileModalTitle").innerHTML = `Hello ${currentUser.displayName}`

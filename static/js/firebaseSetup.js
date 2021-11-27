@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "firebase/firestore"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
-import { successfulSignIn, successfulSignOut, fillUserItems } from "./app.js";
+import { successfulSignIn, successfulSignOut, fillUserItems, fillProfileModal } from "./app.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -45,6 +45,7 @@ export function signUpUser(firstName, lastName, email, password, address) {
                 displayName: `${firstName} ${lastName}`
             }).then(() => createUsersDoc(firstName, lastName, address, String(user.uid)))
                 .then(() => {
+                    fillProfileModal()
                     sendEmailVerification(user)
                 }).then(() => {
                     alert("New user created");

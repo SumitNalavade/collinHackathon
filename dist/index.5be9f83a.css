@@ -71,9 +71,8 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   width: 80% !important;
 }
 .card .itemImage, .card .selfItemImage {
-  width: 10em;
   height: 15em;
-  object-fit: cover;
+  object-fit: contain;
   margin: auto;
 }
 .card .selfCard {
@@ -83,8 +82,7 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   margin: auto;
 }
 .card .selfItemImage {
-  width: 5em;
-  height: 7.5em;
+  height: 10em;
 }
 .categoryCards {
   display: flex;

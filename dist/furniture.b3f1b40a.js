@@ -474,6 +474,7 @@ parcelHelpers.export(exports, "fillUserItems", ()=>fillUserItems
 parcelHelpers.export(exports, "createItemCards", ()=>createItemCards
 );
 var _firebaseSetupJs = require("./firebaseSetup.js");
+var _itemClassJs = require("./ItemClass.js");
 "use strict";
 const Items = {
     mensClothing: [],
@@ -619,25 +620,25 @@ function fillUserItems(userID) {
         });
     });
 }
-function createItemCards(imageURL, itemDescription, itemName, userID) {
+function createItemCards(Item) {
     let cardDiv = document.createElement("div");
     cardDiv.classList.add("card");
     cardDiv.style.width = "20rem";
     cardDiv.style.borderRadius = "20px";
     let image = document.createElement("img");
     image.classList.add("card-img-top", "itemImage");
-    image.setAttribute("src", imageURL);
+    image.setAttribute("src", Item.imageURL);
     cardDiv.appendChild(image);
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
     cardDiv.appendChild(cardBody);
     let cardTitle = document.createElement("h5");
     cardTitle.classList.add("card-title");
-    cardTitle.innerHTML = itemName;
+    cardTitle.innerHTML = Item.itemName;
     cardBody.appendChild(cardTitle);
     let cardText = document.createElement("p");
     cardText.classList.add("card-text");
-    cardText.innerHTML = itemDescription;
+    cardText.innerHTML = Item.itemDescription;
     cardBody.appendChild(cardText);
     let contactButton = document.createElement("button");
     contactButton.classList.add("btn", "btn-success");
@@ -645,20 +646,36 @@ function createItemCards(imageURL, itemDescription, itemName, userID) {
     contactButton.setAttribute("data-bs-toggle", "modal");
     contactButton.setAttribute("data-bs-target", "#itemDetailsModal");
     contactButton.addEventListener("click", function(evt) {
-        console.log(evt);
+        fillItemDetailsModal(Item);
     });
     cardDiv.appendChild(contactButton);
     return cardDiv;
 }
-function fillItemDetailsModal(itemName, imageURL, itemDescription, userEmail, userAddress, itemID) {
-    document.querySelector("#itemDetailImage").setAttribute("img", imageURL);
-    document.querySelector("#itemDetailTitle").innerHTML = itemName;
-    document.querySelector("#itemDetailDescription").innerHTML = itemDescription;
-    document.querySelector("#itemDetailEmail").innerHTML = userEmail;
-    document.querySelector("#itemDetailAddress").innerHTML = userAddress;
+function getFeatured(category) {
+    _firebaseSetupJs.queryFeatured(category).then((items)=>{
+        items.forEach((doc)=>{
+            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
+            const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
+            Items[itemCategory].push(newItem);
+            document.querySelector(`#${category}`).appendChild(createItemCards(newItem));
+        });
+    });
+}
+getFeatured("mensClothing");
+getFeatured("womensClothing");
+getFeatured("kidsClothing");
+getFeatured("electronics");
+getFeatured("furniture");
+async function fillItemDetailsModal(Item) {
+    const user = await _firebaseSetupJs.getUser(Item.userID);
+    document.querySelector("#itemDetailImage").setAttribute("src", Item.imageURL);
+    document.querySelector("#itemDetailTitle").innerHTML = Item.itemName;
+    document.querySelector("#itemDetailDescription").innerHTML = Item.itemDescription;
+    document.querySelector("#itemDetailEmail").innerHTML = user.email;
+    document.querySelector("#itemDetailAddress").innerHTML = user.address;
 }
 
-},{"./firebaseSetup.js":"80OSe","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"80OSe":[function(require,module,exports) {
+},{"./firebaseSetup.js":"80OSe","./ItemClass.js":"29tur","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"80OSe":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "auth", ()=>auth
@@ -670,6 +687,8 @@ parcelHelpers.export(exports, "signInUser", ()=>signInUser
 parcelHelpers.export(exports, "signOutUser", ()=>signOutUser
 );
 parcelHelpers.export(exports, "getCurrentUserProfile", ()=>getCurrentUserProfile
+);
+parcelHelpers.export(exports, "getUser", ()=>getUser
 );
 parcelHelpers.export(exports, "resetPassword", ()=>resetPassword
 );
@@ -724,7 +743,7 @@ function signUpUser(firstName, lastName, email, password, address) {
         const user = userCredential.user; //Signed in user
         _auth.updateProfile(user, {
             displayName: `${firstName} ${lastName}`
-        }).then(()=>createUsersDoc(firstName, lastName, address, String(user.uid))
+        }).then(()=>createUsersDoc(firstName, lastName, address, String(user.uid), email)
         ).then(()=>{
             _appJs.fillProfileModal();
             _auth.sendEmailVerification(user);
@@ -737,12 +756,13 @@ function signUpUser(firstName, lastName, email, password, address) {
         else alert("Error creating user");
     });
 }
-async function createUsersDoc(firstName, lastName, address, uid) {
+async function createUsersDoc(firstName, lastName, address, uid, email) {
     const usersRef = _firestore.collection(db, "users");
     await _firestore.setDoc(_firestore.doc(usersRef, uid), {
         displayName: `${firstName} ${lastName}`,
         address: address,
-        uid: uid
+        uid: uid,
+        email: email
     });
 }
 function signInUser(email, password) {
@@ -771,6 +791,11 @@ async function getCurrentUserProfile() {
         address: docSnap.data().address
     };
 }
+async function getUser(userID) {
+    const docRef = _firestore.doc(db, "users", userID);
+    const docSnap = await _firestore.getDoc(docRef);
+    return docSnap.data();
+}
 function resetPassword() {
     const user = auth.currentUser;
     _auth.sendPasswordResetEmail(auth, user.email).then(()=>{
@@ -786,8 +811,13 @@ async function resetEmail(newEmail) {
         alert("Error reauthenticating");
         console.log(error);
     });
-    _auth.updateEmail(auth.currentUser, newEmail).then(()=>{
-        alert("Email updated");
+    _auth.updateEmail(auth.currentUser, newEmail).then(async ()=>{
+        const docRef = _firestore.doc(db, "users", auth.currentUser.uid);
+        await _firestore.updateDoc(docRef, {
+            email: newEmail
+        }).then(()=>{
+            alert("Email updated succesfully");
+        });
     }).catch((error)=>{
         alert("Error updating email");
         console.log(error);
@@ -34548,6 +34578,22 @@ function registerStorage() {
 }
 registerStorage();
 
-},{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["6ppmh","6w90M"], "6w90M", "parcelRequirea2cd")
+},{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"29tur":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Item", ()=>Item
+);
+class Item {
+    constructor(itemName, itemDescription, itemCategory, imageURL, userID, itemID, email){
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.imageURL = imageURL;
+        this.userID = userID;
+        this.itemID = itemID;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["6ppmh","6w90M"], "6w90M", "parcelRequirea2cd")
 
 //# sourceMappingURL=furniture.b3f1b40a.js.map

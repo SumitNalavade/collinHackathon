@@ -1,6 +1,7 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail, resetAddress } from "./firebaseSetup.js"
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail, resetAddress, queryFeatured, getUser } from "./firebaseSetup.js"
+import { Item } from "./ItemClass.js";
 
 export const Items = {
     mensClothing: [],
@@ -176,7 +177,7 @@ export function fillUserItems(userID) {
     })
 }
 
-export function createItemCards(imageURL, itemDescription, itemName, userID) {
+export function createItemCards(Item) {
     let cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
             cardDiv.style.width = "20rem";
@@ -184,7 +185,7 @@ export function createItemCards(imageURL, itemDescription, itemName, userID) {
 
             let image = document.createElement("img");
             image.classList.add("card-img-top", "itemImage");
-            image.setAttribute("src", imageURL);
+            image.setAttribute("src", Item.imageURL);
             cardDiv.appendChild(image);
 
             let cardBody = document.createElement("div");
@@ -193,12 +194,12 @@ export function createItemCards(imageURL, itemDescription, itemName, userID) {
 
             let cardTitle = document.createElement("h5");
             cardTitle.classList.add("card-title");
-            cardTitle.innerHTML = itemName;
+            cardTitle.innerHTML = Item.itemName;
             cardBody.appendChild(cardTitle);
 
             let cardText = document.createElement("p");
             cardText.classList.add("card-text");
-            cardText.innerHTML = itemDescription;
+            cardText.innerHTML = Item.itemDescription;
             cardBody.appendChild(cardText);
 
             let contactButton = document.createElement("button");
@@ -208,7 +209,7 @@ export function createItemCards(imageURL, itemDescription, itemName, userID) {
             contactButton.setAttribute("data-bs-target", "#itemDetailsModal");
 
             contactButton.addEventListener("click", function (evt) {
-                console.log(evt);
+                fillItemDetailsModal(Item)
             })
 
             cardDiv.appendChild(contactButton)
@@ -216,12 +217,32 @@ export function createItemCards(imageURL, itemDescription, itemName, userID) {
     return cardDiv
 }
 
-function fillItemDetailsModal(itemName, imageURL, itemDescription, userEmail, userAddress, itemID) {
-    document.querySelector("#itemDetailImage").setAttribute("img", imageURL);
-    document.querySelector("#itemDetailTitle").innerHTML = itemName;
-    document.querySelector("#itemDetailDescription").innerHTML = itemDescription
-    document.querySelector("#itemDetailEmail").innerHTML = userEmail;
-    document.querySelector("#itemDetailAddress").innerHTML = userAddress;
+function getFeatured(category) {
+    queryFeatured(category).then((items) => {
+        items.forEach((doc) => {
+            const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
+            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id)
+            Items[itemCategory].push(newItem)
+
+            document.querySelector(`#${category}`).appendChild(createItemCards(newItem));
+        });
+    })
+}
+
+getFeatured("mensClothing");
+getFeatured("womensClothing");
+getFeatured("kidsClothing");
+getFeatured("electronics");
+getFeatured("furniture");
+
+async function fillItemDetailsModal(Item) {
+    const user = await getUser(Item.userID);
+
+    document.querySelector("#itemDetailImage").setAttribute("src", Item.imageURL);
+    document.querySelector("#itemDetailTitle").innerHTML = Item.itemName;
+    document.querySelector("#itemDetailDescription").innerHTML = Item.itemDescription
+    document.querySelector("#itemDetailEmail").innerHTML = user.email;
+    document.querySelector("#itemDetailAddress").innerHTML = user.address;
 }
 
 

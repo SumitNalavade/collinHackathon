@@ -461,36 +461,18 @@ function hmrAcceptRun(bundle, id) {
 },{}],"29tur":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Item", ()=>Item
-);
-var _firebaseSetupJs = require("./firebaseSetup.js");
-var _appJs = require("./app.js");
 class Item {
-    constructor(itemName1, itemDescription1, itemCategory1, imageURL1, userID1, itemID){
-        this.itemName = itemName1;
-        this.itemDescription = itemDescription1;
-        this.itemCategory = itemCategory1;
-        this.imageURL = imageURL1;
-        this.userID = userID1;
+    constructor(itemName, itemDescription, itemCategory, imageURL, userID, itemID){
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.imageURL = imageURL;
+        this.userID = userID;
         this.itemID = itemID;
     }
 }
-function getFeatured(category) {
-    _firebaseSetupJs.queryFeatured(category).then((items)=>{
-        items.forEach((doc)=>{
-            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
-            _appJs.Items[itemCategory].push(newItem);
-            document.querySelector(`#${category}`).appendChild(_appJs.createItemCards(imageURL, itemDescription, itemName, doc.id));
-        });
-    });
-}
-getFeatured("mensClothing");
-getFeatured("womensClothing");
-getFeatured("kidsClothing");
-getFeatured("electronics");
-getFeatured("furniture");
+exports.default = Item;
 
-},{"./firebaseSetup.js":"80OSe","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1kH6n","29tur"], "29tur", "parcelRequirea2cd")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1kH6n","29tur"], "29tur", "parcelRequirea2cd")
 
 //# sourceMappingURL=index.b0a58c44.js.map

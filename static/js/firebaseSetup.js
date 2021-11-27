@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc } from "firebase/firestore"
+import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc, updateDoc } from "firebase/firestore"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
 import { successfulSignIn, successfulSignOut, fillUserItems, fillProfileModal } from "./app.js";
@@ -43,7 +43,7 @@ export function signUpUser(firstName, lastName, email, password, address) {
             const user = userCredential.user; //Signed in user
             updateProfile(user, {
                 displayName: `${firstName} ${lastName}`
-            }).then(() => createUsersDoc(firstName, lastName, address, String(user.uid)))
+            }).then(() => createUsersDoc(firstName, lastName, address, String(user.uid), email))
                 .then(() => {
                     fillProfileModal()
                     sendEmailVerification(user)
@@ -59,13 +59,14 @@ export function signUpUser(firstName, lastName, email, password, address) {
             }
         })
 }
-async function createUsersDoc(firstName, lastName, address, uid) {
+async function createUsersDoc(firstName, lastName, address, uid, email) {
     const usersRef = collection(db, "users");
 
     await setDoc(doc(usersRef, uid), {
         displayName: `${firstName} ${lastName}`,
         address: address,
-        uid: uid
+        uid: uid,
+        email: email
     })
 }
 
@@ -101,6 +102,13 @@ export async function getCurrentUserProfile() {
     }
 }
 
+export async function getUser(userID) {
+    const docRef = doc(db, "users", userID);
+    const docSnap = await getDoc(docRef);
+
+    return docSnap.data()
+}
+
 export function resetPassword() {
     const user = auth.currentUser
 
@@ -124,8 +132,15 @@ export async function resetEmail (newEmail) {
       });
 
 
-    updateEmail(auth.currentUser, newEmail).then(() => {
-        alert("Email updated");
+    updateEmail(auth.currentUser, newEmail).then(async () => {
+        const docRef = doc(db, "users", auth.currentUser.uid);
+
+        await updateDoc(docRef, {
+            email: newEmail
+        })
+        .then(() => {
+            alert("Email updated succesfully")
+        })
     })
     .catch((error) => {
         alert("Error updating email");

@@ -459,18 +459,26 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"kWhWf":[function(require,module,exports) {
+var _itemClassJs = require("./ItemClass.js");
 var _firebaseSetupJs = require("./firebaseSetup.js");
 var _appJs = require("./app.js");
-var _itemClassJs = require("./ItemClass.js");
-window.addEventListener("DOMContentLoaded", ()=>{
-    _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
-        items.forEach((doc)=>{
-            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
-            document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(imageURL, itemDescription, itemName, doc.id));
-        });
+Items = {
+    mensClothing: [],
+    womensClothing: [],
+    kidsClothing: [],
+    electronics: [],
+    furniture: []
+};
+_firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
+    items.forEach((doc)=>{
+        const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
+        const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
+        _appJs.Items[itemCategory].push(newItem);
+        document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
     });
+    console.log(_appJs.Items);
 });
 
-},{"./firebaseSetup.js":"80OSe","./app.js":"6w90M","./ItemClass.js":"29tur"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
+},{"./ItemClass.js":"29tur","./firebaseSetup.js":"80OSe","./app.js":"6w90M"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
 
 //# sourceMappingURL=furniture.24a4ab1a.js.map

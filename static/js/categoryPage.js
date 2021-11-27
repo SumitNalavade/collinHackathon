@@ -1,13 +1,25 @@
+import { Item } from "./ItemClass.js";
 import { getCategoryPageItems } from "./firebaseSetup.js"
 import { createItemCards, Items } from "./app.js"
-import { Item } from "./ItemClass.js"
 
-window.addEventListener("DOMContentLoaded", () => {
-    getCategoryPageItems(category).then((items) => {
-        items.forEach((doc) => {
-            const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
+Items = {
+    mensClothing: [],
+    womensClothing: [],
+    kidsClothing: [],
+    electronics: [],
+    furniture: []
+}
 
-            document.querySelector(".categoryCards").appendChild(createItemCards(imageURL, itemDescription, itemName, doc.id));
-        })
-    });
-})
+getCategoryPageItems(category).then((items) => {
+    items.forEach((doc) => {
+        const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
+
+        const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
+        Items[itemCategory].push(newItem)
+        
+        document.querySelector(".categoryCards").appendChild(createItemCards(newItem));
+    })
+
+    console.log(Items);
+});
+

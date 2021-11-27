@@ -476,7 +476,6 @@ _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
         _appJs.Items[itemCategory].push(newItem);
         document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
     });
-    console.log(_appJs.Items);
 });
 
 },{"./ItemClass.js":"29tur","./firebaseSetup.js":"80OSe","./app.js":"6w90M"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")

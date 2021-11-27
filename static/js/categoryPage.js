@@ -19,7 +19,5 @@ getCategoryPageItems(category).then((items) => {
         
         document.querySelector(".categoryCards").appendChild(createItemCards(newItem));
     })
-
-    console.log(Items);
 });
 

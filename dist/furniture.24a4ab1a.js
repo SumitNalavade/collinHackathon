@@ -469,15 +469,60 @@ let Items = {
     electronics: [],
     furniture: []
 };
+let last;
 _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
-    items.forEach((doc)=>{
+    last = items[1];
+    console.log(last);
+    items[0].forEach((doc)=>{
         const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
         const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
         Items[itemCategory].push(newItem);
         document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
     });
 });
+window.onscroll = infiniteScroll;
+// This variable is used to remember if the function was executed.
+var isExecuted = false;
+function infiniteScroll() {
+    // Inside the "if" statement the "isExecuted" variable is negated to allow initial code execution.
+    if (window.scrollY > document.body.offsetHeight - window.outerHeight && !isExecuted) {
+        // Set "isExecuted" to "true" to prevent further execution
+        isExecuted = true;
+        // Your code goes here
+        _firebaseSetupJs.paginateData(last).then((data)=>{
+            last = data[1];
+            data[0].forEach((doc)=>{
+                const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
+                const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
+                Items[itemCategory].push(newItem);
+                document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
+            });
+        }).catch((error)=>{
+            console.log(error);
+        });
+        // After 1 second the "isExecuted" will be set to "false" to allow the code inside the "if" statement to be executed again
+        setTimeout(()=>{
+            isExecuted = false;
+        }, 1000);
+    }
+}
 
-},{"./ItemClass.js":"29tur","./firebaseSetup.js":"80OSe","./app.js":"6w90M"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
+},{"./ItemClass.js":"29tur","./firebaseSetup.js":"80OSe","./app.js":"6w90M"}],"29tur":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Item", ()=>Item
+);
+class Item {
+    constructor(itemName, itemDescription, itemCategory, imageURL, userID, itemID, email){
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.imageURL = imageURL;
+        this.userID = userID;
+        this.itemID = itemID;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["k9puv","kWhWf"], "kWhWf", "parcelRequirea2cd")
 
 //# sourceMappingURL=furniture.24a4ab1a.js.map

@@ -1,15 +1,6 @@
 "use strict"
 
-import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail, resetAddress, queryFeatured, getUser } from "./firebaseSetup.js"
-import { Item } from "./ItemClass.js";
-
-export let Items = {
-    mensClothing: [],
-    womensClothing: [],
-    kidsClothing: [],
-    electronics: [],
-    furniture: []
-}
+import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfile, addNewItem, getUserItems, deleteItem, resetEmail, resetAddress, getUser } from "./firebaseSetup.js"
 
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
@@ -216,24 +207,6 @@ export function createItemCards(Item) {
 
     return cardDiv
 }
-
-function getFeatured(category) {
-    queryFeatured(category).then((items) => {
-        items.forEach((doc) => {
-            const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
-            const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id)
-            Items[itemCategory].push(newItem)
-
-            document.querySelector(`#${category}`).appendChild(createItemCards(newItem));
-        });
-    })
-}
-
-getFeatured("mensClothing");
-getFeatured("womensClothing");
-getFeatured("kidsClothing");
-getFeatured("electronics");
-getFeatured("furniture");
 
 async function fillItemDetailsModal(Item) {
     const user = await getUser(Item.userID);

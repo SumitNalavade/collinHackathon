@@ -50,13 +50,13 @@ Install dependencies
 Start the server
 
 ```bash
-  npm parcel templates/index.html
+  npx parcel templates/index.html
 ```
 
 Build project
 
 ```bash
-  npm parcel build templates/index.html
+  npx parcel build templates/index.html
 ```
 
 

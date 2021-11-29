@@ -472,7 +472,6 @@ let Items = {
 let last;
 _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
     last = items[1];
-    console.log(last);
     items[0].forEach((doc)=>{
         const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
         const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
@@ -492,6 +491,7 @@ function infiniteScroll() {
         _firebaseSetupJs.paginateData(last).then((data)=>{
             last = data[1];
             data[0].forEach((doc)=>{
+                console.log(doc);
                 const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
                 const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
                 Items[itemCategory].push(newItem);

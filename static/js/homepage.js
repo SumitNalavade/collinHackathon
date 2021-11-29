@@ -12,6 +12,8 @@ export let Items = {
 
 function getFeatured(category) {
     queryFeatured(category).then((items) => {
+        document.querySelector(`#${category}`).innerHTML = "";
+        
         items.forEach((doc) => {
             const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
             const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id)

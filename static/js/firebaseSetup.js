@@ -239,7 +239,7 @@ export async function deleteItem(category, itemID, userID, imageURL) {
 export async function getCategoryPageItems(category) {
     const itemsRef = collection(db, "items", category, "items");
 
-    const q = query(itemsRef, limit(1));
+    const q = query(itemsRef, limit(6));
 
     const querySnapshot = await getDocs(q);
 
@@ -252,7 +252,7 @@ export async function paginateData(last) {
     const next = query(collection(db, "items", category, "items"),
     orderBy("userID"),
     startAfter(last),
-    limit(1))
+    limit(6))
     
     const querySnapshot = await getDocs(next)
 

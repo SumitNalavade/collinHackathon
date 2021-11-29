@@ -88,6 +88,10 @@ document.querySelectorAll(".bi-check-square").forEach((button) => {
     })
 })
 
+document.querySelector("#resetPasswordButton").addEventListener("click", () => {
+    resetPassword();
+})
+
 document.querySelector("#donateButton").addEventListener("click", (evt) => {
     evt.preventDefault();
 
@@ -171,9 +175,7 @@ export function fillUserItems(userID) {
 export function createItemCards(Item) {
     let cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
-            cardDiv.style.width = "20rem";
-            cardDiv.style.borderRadius = "20px";
-
+            
             let image = document.createElement("img");
             image.classList.add("card-img-top", "itemImage");
             image.setAttribute("src", Item.imageURL);

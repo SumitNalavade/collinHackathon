@@ -64,6 +64,8 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   max-width: 300px;
   border-color: #198754;
   border-width: 2px;
+  width: 20rem;
+  border-radius: 20px;
 }
 .card .card-body {
   width: 100%;

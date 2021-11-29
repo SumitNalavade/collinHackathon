@@ -539,6 +539,9 @@ document.querySelectorAll(".bi-check-square").forEach((button)=>{
         newAddress.value = "";
     });
 });
+document.querySelector("#resetPasswordButton").addEventListener("click", ()=>{
+    _firebaseSetupJs.resetPassword();
+});
 document.querySelector("#donateButton").addEventListener("click", (evt)=>{
     evt.preventDefault();
     const itemName = document.querySelector("#itemName");
@@ -613,8 +616,6 @@ function fillUserItems(userID) {
 function createItemCards(Item) {
     let cardDiv = document.createElement("div");
     cardDiv.classList.add("card");
-    cardDiv.style.width = "20rem";
-    cardDiv.style.borderRadius = "20px";
     let image = document.createElement("img");
     image.classList.add("card-img-top", "itemImage");
     image.setAttribute("src", Item.imageURL);
@@ -862,7 +863,7 @@ async function deleteItem(category, itemID, userID, imageURL) {
 }
 async function getCategoryPageItems(category) {
     const itemsRef = _firestore.collection(db, "items", category, "items");
-    const q = _firestore.query(itemsRef, _firestore.limit(1));
+    const q = _firestore.query(itemsRef, _firestore.limit(6));
     const querySnapshot = await _firestore.getDocs(q);
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
     return [
@@ -871,7 +872,7 @@ async function getCategoryPageItems(category) {
     ];
 }
 async function paginateData(last) {
-    const next = _firestore.query(_firestore.collection(db, "items", category, "items"), _firestore.orderBy("userID"), _firestore.startAfter(last), _firestore.limit(1));
+    const next = _firestore.query(_firestore.collection(db, "items", category, "items"), _firestore.orderBy("userID"), _firestore.startAfter(last), _firestore.limit(6));
     const querySnapshot = await _firestore.getDocs(next);
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
     return [

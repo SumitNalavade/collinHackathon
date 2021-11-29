@@ -14,7 +14,6 @@ let last
 
 getCategoryPageItems(category).then((items) => {
     last = items[1]
-    console.log(last)
     items[0].forEach((doc) => {
         const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
 
@@ -40,6 +39,7 @@ window.onscroll = infiniteScroll;
             paginateData(last).then((data) => {
                 last = data[1]
                 data[0].forEach((doc) => {
+                    console.log(doc);
                     const { itemName, itemDescription, itemCategory, imageURL, userID } = doc.data();
         
                     const newItem = new Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);

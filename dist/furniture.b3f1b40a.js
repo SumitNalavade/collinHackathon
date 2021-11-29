@@ -461,6 +461,8 @@ function hmrAcceptRun(bundle, id) {
 },{}],"6w90M":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Items", ()=>Items
+);
 parcelHelpers.export(exports, "successfulSignIn", ()=>successfulSignIn
 );
 parcelHelpers.export(exports, "successfulSignOut", ()=>successfulSignOut
@@ -472,7 +474,15 @@ parcelHelpers.export(exports, "fillUserItems", ()=>fillUserItems
 parcelHelpers.export(exports, "createItemCards", ()=>createItemCards
 );
 var _firebaseSetupJs = require("./firebaseSetup.js");
+var _itemClassJs = require("./ItemClass.js");
 "use strict";
+let Items = {
+    mensClothing: [],
+    womensClothing: [],
+    kidsClothing: [],
+    electronics: [],
+    furniture: []
+};
 document.querySelector("#signUpButton").addEventListener("click", (evt)=>{
     evt.preventDefault();
     const firstName = document.querySelector("#signupFirstName");
@@ -641,6 +651,21 @@ function createItemCards(Item) {
     cardDiv.appendChild(contactButton);
     return cardDiv;
 }
+function getFeatured(category) {
+    _firebaseSetupJs.queryFeatured(category).then((items)=>{
+        items.forEach((doc)=>{
+            const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
+            const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
+            Items[itemCategory].push(newItem);
+            document.querySelector(`#${category}`).appendChild(createItemCards(newItem));
+        });
+    });
+}
+getFeatured("mensClothing");
+getFeatured("womensClothing");
+getFeatured("kidsClothing");
+getFeatured("electronics");
+getFeatured("furniture");
 async function fillItemDetailsModal(Item) {
     const user = await _firebaseSetupJs.getUser(Item.userID);
     document.querySelector("#itemDetailImage").setAttribute("src", Item.imageURL);
@@ -650,7 +675,7 @@ async function fillItemDetailsModal(Item) {
     document.querySelector("#itemDetailAddress").innerHTML = user.address;
 }
 
-},{"./firebaseSetup.js":"80OSe","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"80OSe":[function(require,module,exports) {
+},{"./firebaseSetup.js":"80OSe","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./ItemClass.js":"29tur"}],"80OSe":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "auth", ()=>auth
@@ -34553,6 +34578,22 @@ function registerStorage() {
 }
 registerStorage();
 
-},{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["6ppmh","6w90M"], "6w90M", "parcelRequirea2cd")
+},{"@firebase/app":"lLbXy","@firebase/util":"3yszE","@firebase/component":"1wISm","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"29tur":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Item", ()=>Item
+);
+class Item {
+    constructor(itemName, itemDescription, itemCategory, imageURL, userID, itemID, email){
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemCategory = itemCategory;
+        this.imageURL = imageURL;
+        this.userID = userID;
+        this.itemID = itemID;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["6ppmh","6w90M"], "6w90M", "parcelRequirea2cd")
 
 //# sourceMappingURL=furniture.b3f1b40a.js.map

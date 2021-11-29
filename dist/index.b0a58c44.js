@@ -461,10 +461,8 @@ function hmrAcceptRun(bundle, id) {
 },{}],"29tur":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Item", ()=>Item
-);
 class Item {
-    constructor(itemName, itemDescription, itemCategory, imageURL, userID, itemID, email){
+    constructor(itemName, itemDescription, itemCategory, imageURL, userID, itemID){
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
@@ -473,6 +471,7 @@ class Item {
         this.itemID = itemID;
     }
 }
+exports.default = Item;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["1kH6n","29tur"], "29tur", "parcelRequirea2cd")
 

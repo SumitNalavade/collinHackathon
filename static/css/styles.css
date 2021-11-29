@@ -89,6 +89,7 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
 
 .categoryCards {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-self: center;
   flex-wrap: wrap;

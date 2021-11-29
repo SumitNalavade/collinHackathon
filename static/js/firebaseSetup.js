@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc, updateDoc } from "firebase/firestore"
+import { getFirestore, doc, getDoc, getDocs, setDoc, collection, query, limit, addDoc, deleteDoc, updateDoc, startAfter, orderBy } from "firebase/firestore"
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
 import { successfulSignIn, successfulSignOut, fillUserItems, fillProfileModal } from "./app.js";
@@ -239,9 +239,24 @@ export async function deleteItem(category, itemID, userID, imageURL) {
 export async function getCategoryPageItems(category) {
     const itemsRef = collection(db, "items", category, "items");
 
-    const q = query(itemsRef);
+    const q = query(itemsRef, limit(1));
 
     const querySnapshot = await getDocs(q);
 
-    return querySnapshot
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+
+    return [querySnapshot, lastVisible]
+}
+
+export async function paginateData(last) {
+    const next = query(collection(db, "items", category, "items"),
+    orderBy("userID"),
+    startAfter(last),
+    limit(1));
+
+    const querySnapshot = await getDocs(next)
+
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+
+    return [querySnapshot, lastVisible]
 }

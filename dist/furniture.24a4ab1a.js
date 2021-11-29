@@ -469,14 +469,41 @@ let Items = {
     electronics: [],
     furniture: []
 };
+let last;
 _firebaseSetupJs.getCategoryPageItems(category).then((items)=>{
-    items.forEach((doc)=>{
+    last = items[1];
+    console.log(last);
+    items[0].forEach((doc)=>{
         const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
         const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
         Items[itemCategory].push(newItem);
         document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
     });
 });
+window.onscroll = infiniteScroll;
+// This variable is used to remember if the function was executed.
+var isExecuted = false;
+function infiniteScroll() {
+    // Inside the "if" statement the "isExecuted" variable is negated to allow initial code execution.
+    if (window.scrollY > document.body.offsetHeight - window.outerHeight && !isExecuted) {
+        // Set "isExecuted" to "true" to prevent further execution
+        isExecuted = true;
+        // Your code goes here
+        _firebaseSetupJs.paginateData(last).then((data)=>{
+            last = data[1];
+            data[0].forEach((doc)=>{
+                const { itemName , itemDescription , itemCategory , imageURL , userID  } = doc.data();
+                const newItem = new _itemClassJs.Item(itemName, itemDescription, itemCategory, imageURL, userID, doc.id);
+                Items[itemCategory].push(newItem);
+                document.querySelector(".categoryCards").appendChild(_appJs.createItemCards(newItem));
+            });
+        });
+        // After 1 second the "isExecuted" will be set to "false" to allow the code inside the "if" statement to be executed again
+        setTimeout(()=>{
+            isExecuted = false;
+        }, 1000);
+    }
+}
 
 },{"./ItemClass.js":"29tur","./firebaseSetup.js":"80OSe","./app.js":"6w90M"}],"29tur":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -554,6 +581,8 @@ parcelHelpers.export(exports, "getUserItems", ()=>getUserItems
 parcelHelpers.export(exports, "deleteItem", ()=>deleteItem
 );
 parcelHelpers.export(exports, "getCategoryPageItems", ()=>getCategoryPageItems
+);
+parcelHelpers.export(exports, "paginateData", ()=>paginateData
 );
 // Import the functions you need from the SDKs you need
 var _app = require("firebase/app");
@@ -734,9 +763,22 @@ async function deleteItem(category, itemID, userID, imageURL) {
 }
 async function getCategoryPageItems(category) {
     const itemsRef = _firestore.collection(db, "items", category, "items");
-    const q = _firestore.query(itemsRef);
+    const q = _firestore.query(itemsRef, _firestore.limit(1));
     const querySnapshot = await _firestore.getDocs(q);
-    return querySnapshot;
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+    return [
+        querySnapshot,
+        lastVisible
+    ];
+}
+async function paginateData(last) {
+    const next = _firestore.query(_firestore.collection(db, "items", category, "items"), _firestore.orderBy("userID"), _firestore.startAfter(last), _firestore.limit(1));
+    const querySnapshot = await _firestore.getDocs(next);
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+    return [
+        querySnapshot,
+        lastVisible
+    ];
 }
 
 },{"firebase/app":"eMZZo","firebase/firestore":"dwMEu","firebase/auth":"g8VIo","firebase/storage":"6Yvcj","./app.js":"6w90M","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"eMZZo":[function(require,module,exports) {

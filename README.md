@@ -1,4 +1,74 @@
-# collinHackathon
-Project for Collin College Hackathon 2021
+
+# EcoVille
+
+Project for 2021 Collin College Hackathon (2nd place winner overall)
+
+Topic: Climate Change
 
 https://ecoville.netlify.app/
+
+
+Improvements made over the following months including:
+-
+- User authentication
+- Image file uploading to Firebase
+- Lazy load images to optimize load time
+- User information resetting
+- Responsive UI
+
+Technologies Used:
+-
+- HTML/CSS
+- SASS/SCSS
+- Bootstrap
+- JavaScript
+- Google Firebase
+- Parcel Bundler
+
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/SumitNalavade/ecoville.git
+```
+
+Go to the project directory
+
+```bash
+  cd ecoville
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm parcel templates/index.html
+```
+
+Build project
+
+```bash
+  npm parcel build templates/index.html
+```
+
+
+## Screenshots
+
+![App Screenshot](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%202.59.08%20AM.png?raw=true)
+
+![App Screenshot](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%202.59.49%20AM.png?raw=true)
+
+![App Screenshot](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%203.00.13%20AM.png?raw=true)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+

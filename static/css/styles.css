@@ -104,10 +104,15 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
 .itemDetailsModalBody {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  padding: 1em 0em;
+}
+.itemDetailsModalBody .itemImageDiv {
+  display: flex;
+  justify-content: center;
 }
 .itemDetailsModalBody img {
-  width: 5em;
   height: 7.5em;
+  object-fit: contain;
 }
 .itemDetailsModalBody .itemDetailsDiv div {
   display: flex;

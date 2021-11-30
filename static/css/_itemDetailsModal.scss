@@ -1,10 +1,17 @@
 .itemDetailsModalBody {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    padding: 1em 0em;
 
+    .itemImageDiv {
+        display: flex;
+        justify-content: center;
+    }
+    
     img {
-        width: 5em;
         height: 7.5em;
+
+        object-fit: contain;
     }
 
     .itemDetailsDiv {

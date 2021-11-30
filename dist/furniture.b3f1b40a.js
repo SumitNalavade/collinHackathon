@@ -845,7 +845,7 @@ async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
 }
 async function queryFeatured(category) {
     const itemsRef = _firestore.collection(db, "items", category, "items");
-    const q = _firestore.query(itemsRef, _firestore.limit(4));
+    const q = _firestore.query(itemsRef, _firestore.limit(3));
     const querySnapshot = await _firestore.getDocs(q);
     return querySnapshot;
 }

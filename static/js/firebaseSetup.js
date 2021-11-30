@@ -209,7 +209,7 @@ export async function addNewItem(itemName, itemDescription, itemCategory, itemIm
 export async function queryFeatured(category) {
     const itemsRef = collection(db, "items", category, "items");
 
-    const q = query(itemsRef, limit(4));
+    const q = query(itemsRef, limit(3));
 
     const querySnapshot = await getDocs(q);
     

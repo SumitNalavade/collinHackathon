@@ -219,7 +219,3 @@ async function fillItemDetailsModal(Item) {
     document.querySelector("#itemDetailEmail").innerHTML = user.email;
     document.querySelector("#itemDetailAddress").innerHTML = user.address;
 }
-
-
-
-

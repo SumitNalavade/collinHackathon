@@ -118,6 +118,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-warning d-none loginLoadingSpinner" role="alert">
+                            <span>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </span>
+                          </div>
                         <div class="accordion" id="accordionExample">
                             <!-- Login Default Accordion -->
                             <div class="accordion-item">
@@ -210,6 +216,12 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-warning d-none profileLoadingSpinner" role="alert">
+                            <span>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </span>
+                          </div>
                         <div class="userInfoContainer">
                             <div>
                                 <label>Name</label>
@@ -295,7 +307,7 @@
                     </div>
                     <div class="modal-body">
                         <form class="form donateForm">
-                            <div class="alert alert-warning d-none" role="alert">
+                            <div class="alert alert-warning d-none donateLoadingSpinner"role="alert">
                                 <span>
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Adding Item...

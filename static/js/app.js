@@ -5,6 +5,8 @@ import { signUpUser, signInUser, signOutUser, resetPassword, getCurrentUserProfi
 document.querySelector("#signUpButton").addEventListener("click", (evt) => {
     evt.preventDefault();
 
+    document.querySelector(".loginLoadingSpinner").classList.remove("d-none")
+
     const firstName = document.querySelector("#signupFirstName")
     const lastName = document.querySelector("#signupLastName")
     const email = document.querySelector("#signupEmail")
@@ -22,16 +24,20 @@ document.querySelector("#signUpButton").addEventListener("click", (evt) => {
 document.querySelector("#loginButton").addEventListener("click", (evt) => {
     evt.preventDefault();
 
+    document.querySelector(".loginLoadingSpinner").classList.remove("d-none")
+
     const email = document.querySelector("#emailLogin")
     const password = document.querySelector("#passwordLogin")
 
     signInUser(email.value, password.value)
 
     email.value = ""
-    password.value = ""
+    password.value = ""    
 })
 
 export function successfulSignIn() {
+    document.querySelector(".loginLoadingSpinner").classList.add("d-none")
+
     document.querySelectorAll(".navAction").forEach((button) => {
         button.classList.toggle("d-none");
     })
@@ -74,6 +80,8 @@ document.querySelectorAll(".bi-pencil").forEach((elm) => {
 
 document.querySelectorAll(".bi-check-square").forEach((button) => {
     button.addEventListener("click", () => {
+        document.querySelector(".profileLoadingSpinner").classList.remove("d-none")
+
         let newEmail = document.querySelector("#newEmail");
         let newAddress = document.querySelector("#newAddress")
 
@@ -89,6 +97,8 @@ document.querySelectorAll(".bi-check-square").forEach((button) => {
 })
 
 document.querySelector("#resetPasswordButton").addEventListener("click", () => {
+    document.querySelector(".profileLoadingSpinner").classList.remove("d-none")
+
     resetPassword();
 })
 
@@ -106,11 +116,11 @@ document.querySelector("#donateButton").addEventListener("click", (evt) => {
         }
     })
 
-    document.querySelector(".alert-warning").classList.toggle("d-none");
+    document.querySelector(".donateLoadingSpinner").classList.toggle("d-none");
 
     addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(() => {
+        document.querySelector(".donateLoadingSpinner").classList.toggle("d-none");
         alert("Item added successfully");
-        document.querySelector(".alert-warning").classList.toggle("d-none");
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input) => {
             input.checked = false;
@@ -155,7 +165,10 @@ export function fillUserItems(userID) {
             newCardDelete.classList.add("btn", "btn-danger", "deleteButton")
             newCardDelete.innerHTML = "Delete"
             newCardDelete.addEventListener("click", () => {
+                document.querySelector(".profileLoadingSpinner").classList.remove("d-none")
+
                 deleteItem(itemCategory, itemID, userID, imageURL).then(() => {
+                    document.querySelector(".profileLoadingSpinner").classList.add("d-none")
                     alert("Item removed");
                     document.querySelector("#selfItemAccordionBody").removeChild(newCard);
 

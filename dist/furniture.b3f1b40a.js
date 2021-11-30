@@ -475,6 +475,7 @@ var _firebaseSetupJs = require("./firebaseSetup.js");
 "use strict";
 document.querySelector("#signUpButton").addEventListener("click", (evt)=>{
     evt.preventDefault();
+    document.querySelector(".loginLoadingSpinner").classList.remove("d-none");
     const firstName = document.querySelector("#signupFirstName");
     const lastName = document.querySelector("#signupLastName");
     const email = document.querySelector("#signupEmail");
@@ -493,6 +494,7 @@ document.querySelector("#signUpButton").addEventListener("click", (evt)=>{
 });
 document.querySelector("#loginButton").addEventListener("click", (evt)=>{
     evt.preventDefault();
+    document.querySelector(".loginLoadingSpinner").classList.remove("d-none");
     const email = document.querySelector("#emailLogin");
     const password = document.querySelector("#passwordLogin");
     _firebaseSetupJs.signInUser(email.value, password.value);
@@ -500,6 +502,7 @@ document.querySelector("#loginButton").addEventListener("click", (evt)=>{
     password.value = "";
 });
 function successfulSignIn() {
+    document.querySelector(".loginLoadingSpinner").classList.add("d-none");
     document.querySelectorAll(".navAction").forEach((button)=>{
         button.classList.toggle("d-none");
     });
@@ -531,6 +534,7 @@ document.querySelectorAll(".bi-pencil").forEach((elm)=>{
 });
 document.querySelectorAll(".bi-check-square").forEach((button)=>{
     button.addEventListener("click", ()=>{
+        document.querySelector(".profileLoadingSpinner").classList.remove("d-none");
         let newEmail = document.querySelector("#newEmail");
         let newAddress = document.querySelector("#newAddress");
         if (button.id === "updateEmail") _firebaseSetupJs.resetEmail(newEmail.value);
@@ -540,6 +544,7 @@ document.querySelectorAll(".bi-check-square").forEach((button)=>{
     });
 });
 document.querySelector("#resetPasswordButton").addEventListener("click", ()=>{
+    document.querySelector(".profileLoadingSpinner").classList.remove("d-none");
     _firebaseSetupJs.resetPassword();
 });
 document.querySelector("#donateButton").addEventListener("click", (evt)=>{
@@ -551,10 +556,10 @@ document.querySelector("#donateButton").addEventListener("click", (evt)=>{
     document.querySelectorAll(".form-check-input").forEach((button)=>{
         if (button.checked) itemCategory = button.value;
     });
-    document.querySelector(".alert-warning").classList.toggle("d-none");
+    document.querySelector(".donateLoadingSpinner").classList.toggle("d-none");
     _firebaseSetupJs.addNewItem(itemName.value, itemDescription.value, itemCategory, itemImage.files[0]).then(()=>{
+        document.querySelector(".donateLoadingSpinner").classList.toggle("d-none");
         alert("Item added successfully");
-        document.querySelector(".alert-warning").classList.toggle("d-none");
         document.querySelector("#donateModalClose").click();
         document.querySelectorAll(".donateInput").forEach((input)=>{
             input.checked = false;
@@ -600,7 +605,9 @@ function fillUserItems(userID) {
             newCardDelete.classList.add("btn", "btn-danger", "deleteButton");
             newCardDelete.innerHTML = "Delete";
             newCardDelete.addEventListener("click", ()=>{
+                document.querySelector(".profileLoadingSpinner").classList.remove("d-none");
                 _firebaseSetupJs.deleteItem(itemCategory, itemID, userID, imageURL).then(()=>{
+                    document.querySelector(".profileLoadingSpinner").classList.add("d-none");
                     alert("Item removed");
                     document.querySelector("#selfItemAccordionBody").removeChild(newCard);
                 }).catch((error)=>{
@@ -708,12 +715,14 @@ const firebaseConfig = {
 const app = _app.initializeApp(firebaseConfig);
 const db = _firestore.getFirestore();
 const storage = _storage.getStorage();
+let signedInUser;
 const auth = _auth.getAuth(app);
 _auth.onAuthStateChanged(auth, (user)=>{
     if (user) {
         const uid = user.uid;
         _appJs.successfulSignIn();
-        _appJs.fillUserItems(auth.currentUser.uid);
+        signedInUser = auth.currentUser;
+        _appJs.fillUserItems(signedInUser.uid);
     } else _appJs.successfulSignOut();
 });
 function signUpUser(firstName, lastName, email, password, address) {
@@ -726,6 +735,7 @@ function signUpUser(firstName, lastName, email, password, address) {
             _appJs.fillProfileModal();
             _auth.sendEmailVerification(user);
         }).then(()=>{
+            document.querySelector(".loginLoadingSpinner").classList.add("d-none");
             alert("New user created");
         });
     }).catch((error)=>{
@@ -749,6 +759,7 @@ function signInUser(email, password) {
         ;
     }).catch((error)=>{
         console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);
+        document.querySelector(".loginLoadingSpinner").classList.add("d-none");
         alert("Sign in unsuccessful");
     });
 }
@@ -759,13 +770,12 @@ function signOutUser() {
     });
 }
 async function getCurrentUserProfile() {
-    const user = auth.currentUser;
-    if (!user) return;
-    const docRef = _firestore.doc(db, "users", user.uid);
+    if (!auth.currentUser) return;
+    const docRef = _firestore.doc(db, "users", auth.currentUser.uid);
     const docSnap = await _firestore.getDoc(docRef);
     return {
-        displayName: user.displayName,
-        email: user.email,
+        displayName: auth.currentUser.displayName,
+        email: auth.currentUser.email,
         address: docSnap.data().address
     };
 }
@@ -775,25 +785,27 @@ async function getUser(userID) {
     return docSnap.data();
 }
 function resetPassword() {
-    const user = auth.currentUser;
-    _auth.sendPasswordResetEmail(auth, user.email).then(()=>{
+    _auth.sendPasswordResetEmail(auth, signedInUser.email).then(()=>{
+        document.querySelector(".profileLoadingSpinner").classList.add("d-none");
         alert("Password reset email has been sent");
     }).catch((error)=>{
+        document.querySelector(".profileLoadingSpinner").classList.add("d-none");
         alert("Error sending password reset email");
     });
 }
 async function resetEmail(newEmail) {
     const password = prompt("Please enter password");
-    const credential = _auth.EmailAuthProvider.credential(auth.currentUser.email, password);
-    await _auth.reauthenticateWithCredential(auth.currentUser, credential).catch((error)=>{
+    const credential = _auth.EmailAuthProvider.credential(signedInUser.email, password);
+    await _auth.reauthenticateWithCredential(signedInUser, credential).catch((error)=>{
         alert("Error reauthenticating");
         console.log(error);
     });
     _auth.updateEmail(auth.currentUser, newEmail).then(async ()=>{
-        const docRef = _firestore.doc(db, "users", auth.currentUser.uid);
+        const docRef = _firestore.doc(db, "users", signedInUser.uid);
         await _firestore.updateDoc(docRef, {
             email: newEmail
         }).then(()=>{
+            document.querySelector(".profileLoadingSpinner").classList.add("d-none");
             alert("Email updated succesfully");
         });
     }).catch((error)=>{
@@ -802,16 +814,17 @@ async function resetEmail(newEmail) {
     });
 }
 async function resetAddress(newAddress) {
-    await _firestore.setDoc(_firestore.doc(db, "users", auth.currentUser.uid), {
+    await _firestore.setDoc(_firestore.doc(db, "users", signedInUser.uid), {
         address: newAddress
     }).then(()=>{
+        document.querySelector(".profileLoadingSpinner").classList.add("d-none");
         alert("Address Updated Successfully");
     }).catch((error)=>{
         console.log(error);
     });
 }
 async function addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID) {
-    const usersRef = _firestore.collection(db, "users", auth.currentUser.uid, "items");
+    const usersRef = _firestore.collection(db, "users", signedInUser.uid, "items");
     await _firestore.setDoc(_firestore.doc(usersRef, itemID), {
         itemName: itemName,
         itemDescription: itemDescription,
@@ -824,7 +837,7 @@ async function addItemsCollection(itemName, itemDescription, itemCategory, image
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        userID: String(auth.currentUser.uid),
+        userID: String(signedInUser.uid),
         imageURL: imageURL
     });
     return docRef.id;
@@ -841,7 +854,7 @@ async function addNewItem(itemName, itemDescription, itemCategory, itemImage) {
     let imageURL = await addItemImage(itemImage, itemName);
     let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, imageURL);
     await addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID);
-    _appJs.fillUserItems(auth.currentUser.uid);
+    _appJs.fillUserItems(signedInUser.uid);
 }
 async function queryFeatured(category) {
     const itemsRef = _firestore.collection(db, "items", category, "items");

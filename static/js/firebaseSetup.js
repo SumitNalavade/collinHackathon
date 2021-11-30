@@ -25,13 +25,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const storage = getStorage();
+let signedInUser
 export const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
         successfulSignIn();
-        fillUserItems(auth.currentUser.uid)
+        signedInUser = auth.currentUser
+        fillUserItems(signedInUser.uid)
     } else {
         successfulSignOut();
     }
@@ -48,6 +50,7 @@ export function signUpUser(firstName, lastName, email, password, address) {
                     fillProfileModal()
                     sendEmailVerification(user)
                 }).then(() => {
+                    document.querySelector(".loginLoadingSpinner").classList.add("d-none")
                     alert("New user created");
                 })
         }).catch((error) => {
@@ -76,6 +79,7 @@ export function signInUser(email, password) {
             const user = userCredential.user //Signed in user
         }).catch((error) => {
             console.log(`Error Code: ${error.code}` + `Error Message: ${error.message}`);
+            document.querySelector(".loginLoadingSpinner").classList.add("d-none")
             alert("Sign in unsuccessful")
         })
 }
@@ -88,16 +92,14 @@ export function signOutUser() {
 }
 
 export async function getCurrentUserProfile() {
-    const user = auth.currentUser;
+    if (!auth.currentUser) { return }
 
-    if (!user) { return }
-
-    const docRef = doc(db, "users", user.uid);
+    const docRef = doc(db, "users", auth.currentUser.uid);
     const docSnap = await getDoc(docRef);
 
     return {
-        displayName: user.displayName,
-        email: user.email,
+        displayName: auth.currentUser.displayName,
+        email: auth.currentUser.email,
         address: docSnap.data().address
     }
 }
@@ -110,13 +112,13 @@ export async function getUser(userID) {
 }
 
 export function resetPassword() {
-    const user = auth.currentUser
-
-    sendPasswordResetEmail(auth, user.email)
+    sendPasswordResetEmail(auth, signedInUser.email)
         .then(() => {
+            document.querySelector(".profileLoadingSpinner").classList.add("d-none")
             alert("Password reset email has been sent")
         })
         .catch((error) => {
+            document.querySelector(".profileLoadingSpinner").classList.add("d-none")
             alert("Error sending password reset email")
         });
 }
@@ -124,21 +126,22 @@ export function resetPassword() {
 export async function resetEmail (newEmail) {
     const password = prompt("Please enter password");
     
-    const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
+    const credential = EmailAuthProvider.credential(signedInUser.email, password);
 
-    await reauthenticateWithCredential(auth.currentUser, credential).catch((error) => {
+    await reauthenticateWithCredential(signedInUser, credential).catch((error) => {
         alert("Error reauthenticating");
         console.log(error);
       });
 
 
     updateEmail(auth.currentUser, newEmail).then(async () => {
-        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docRef = doc(db, "users", signedInUser.uid);
 
         await updateDoc(docRef, {
             email: newEmail
         })
         .then(() => {
+            document.querySelector(".profileLoadingSpinner").classList.add("d-none")
             alert("Email updated succesfully")
         })
     })
@@ -150,9 +153,10 @@ export async function resetEmail (newEmail) {
 }
 
 export async function resetAddress(newAddress) {
-    await setDoc(doc(db, "users", auth.currentUser.uid), {
+    await setDoc(doc(db, "users", signedInUser.uid), {
         address: newAddress
       }).then(() => {
+        document.querySelector(".profileLoadingSpinner").classList.add("d-none")
           alert("Address Updated Successfully");
       })
       .catch((error) => {
@@ -162,7 +166,7 @@ export async function resetAddress(newAddress) {
 }
 
 async function addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID) {
-    const usersRef = collection(db, "users", auth.currentUser.uid, "items");
+    const usersRef = collection(db, "users", signedInUser.uid, "items");
 
     await setDoc(doc(usersRef, itemID), {
         itemName: itemName,
@@ -177,7 +181,7 @@ async function addItemsCollection(itemName, itemDescription, itemCategory, image
         itemName: itemName,
         itemDescription: itemDescription,
         itemCategory: itemCategory,
-        userID: String(auth.currentUser.uid),
+        userID: String(signedInUser.uid),
         imageURL: imageURL
     });
 
@@ -203,7 +207,7 @@ export async function addNewItem(itemName, itemDescription, itemCategory, itemIm
     let imageURL = await addItemImage(itemImage, itemName);
         let itemID = await addItemsCollection(itemName, itemDescription, itemCategory, imageURL);
             await addItemsToUser(itemName, itemDescription, itemCategory, imageURL, itemID);
-                fillUserItems(auth.currentUser.uid);
+                fillUserItems(signedInUser.uid);
 }
 
 export async function queryFeatured(category) {

@@ -5,6 +5,8 @@ Project for 2021 Collin College Hackathon (2nd place winner overall)
 
 Topic: Climate Change
 
+EcoVille is an online platform that allows individuals to reduce overall waste by donating unused goods amongst others in their community.
+
 https://ecoville.netlify.app/
 
 

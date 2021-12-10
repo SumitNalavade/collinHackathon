@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const categoriesData = require('./categoriesData.json');
 
 const app = express();
 app.set("view engine", "ejs");
@@ -19,7 +20,12 @@ app.get("/", (req, res) => {
 app.get("/:category", (req, res) => {
     const { category } = req.params;
 
-    res.render("category.ejs", {
-        category : category
-    });
+    if(categoriesData[category]) {
+        res.render("category.ejs", {
+            category : category,
+            data : categoriesData[category]
+        });
+    } else {
+        res.send("Error: 404 Page Not Found");
+    }
 })

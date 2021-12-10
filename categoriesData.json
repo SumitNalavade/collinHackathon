@@ -1,0 +1,26 @@
+{
+    "mensclothing" : {
+        "title" : "Men's Clothing",
+        "data" : "mensClothing"
+    },
+
+    "womensclothing" : {
+        "title" : "Women's Clothing",
+        "data" : "womensClothing"
+    },
+
+    "kidsclothing" : {
+        "title" : "Kid's Clothing",
+        "data" : "kidsClothing"
+    },
+
+    "electronics" : {
+        "title" : "Electronics",
+        "data" : "furniture"
+    },
+
+    "furniture" : {
+        "title" :"Furniture",
+        "data" : "furniture"
+    }
+}

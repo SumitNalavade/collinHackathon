@@ -1,0 +1,104 @@
+<div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="donateModalTitle">Donate</h5>
+                <button type="button" class="btn-close" id="donateModalClose" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form donateForm">
+                    <div class="alert alert-warning donateLoadingSpinner d-none" role="alert">
+                        <span>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Adding Item...
+                        </span>
+                      </div>
+                      
+                    <div>
+                        <label>Item Name</label>
+                        <input required id="itemName" class="donateInput">
+                    </div>
+                    <div>
+                        <label>Item Description</label>
+                        <textarea rows="4" cols="30" id="itemDescription" class="donateInput">
+                            </textarea>
+                    </div>
+
+                    <div>
+                        <input type="file" id="imageInput">
+                    </div>
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    <label>Categories</label>
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="categories">
+                                        <div class="form-check">
+                                            <input class="form-check-input donateInput" type="radio"
+                                                name="category" value="mensClothing" id="flexRadioDefault0">
+                                            <label class="form-check-label" for="flexRadioDefault">
+                                                Men's Clothing
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input donateInput" type="radio"
+                                                name="category" value="womensClothing" id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Women's Clothing
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input donateInput" type="radio"
+                                                name="category" value="kidsClothing" id="flexRadioDefault2">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Kid's Clothing
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input donateInput" type="radio"
+                                                name="category" value="electronics" id="flexRadioDefault3">
+                                            <label class="form-check-label" for="flexRadioDefault3">
+                                                Electronics
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input donateInput" type="radio"
+                                                name="category" value="furniture" id="flexRadioDefault4">
+                                            <label class="form-check-label" for="flexRadioDefault4">
+                                                Furniture
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input donateInput" type="radio"
+                                                name="category" value="Other" id="flexRadioDefault5">
+                                            <label class="form-check-label" for="flexRadioDefault5">
+                                                Other
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success" id="donateButton">Donate</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

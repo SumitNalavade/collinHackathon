@@ -15,3 +15,11 @@ app.listen(PORT, (req, res) => {
 app.get("/", (req, res) => {
     res.render("homepage.ejs");
 })
+
+app.get("/:category", (req, res) => {
+    const { category } = req.params;
+
+    res.render("category.ejs", {
+        category : category
+    });
+})

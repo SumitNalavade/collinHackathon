@@ -1,0 +1,46 @@
+.card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+
+  margin-bottom: 1em;
+  padding: 1em;
+
+  width: 95% !important;
+  max-width: 300px;
+
+  border-color: $primary-color;
+  border-width: 2px;
+  
+  width: 20rem;
+  border-radius: 20px;
+
+  .card-body {
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn {
+    width: 80% !important;
+  }
+
+  .itemImage {
+    height: 15em;
+    object-fit: contain;
+
+    margin: auto;
+  }
+
+  .selfCard {
+    align-items: initial;
+    flex-direction: row !important;
+    justify-content: center !important;
+    margin: auto;
+  }
+
+  .selfItemImage {
+    @extend .itemImage;
+    
+    height: 10em;
+  }
+}

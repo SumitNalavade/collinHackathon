@@ -1,0 +1,46 @@
+nav {
+  a {
+    color: white !important;
+
+    &:hover {
+      color: $primary-color !important;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: $secondary-color !important;
+  }
+
+  .dropdown-item:hover {
+    background-color: $primary-color !important;
+    color: white !important;
+  }
+
+  button:not(#navDonateButton):not(#navLoginButton) {
+    border: none;
+    margin-left: 15px;
+  }
+
+  #profileIconButton {
+    background-color: $secondary-color !important;
+    color: $primary-color !important;
+  }
+
+  .footerA {
+    font-size: 1rem;
+    margin: auto;
+
+    &:hover {
+      color: $primary-color !important;
+    }
+  }
+
+  .custom-toggler.navbar-toggler {
+    border-color: white !important;
+
+    .navbar-toggler-icon {
+      @include hamburgerImage;
+    }
+}
+
+}

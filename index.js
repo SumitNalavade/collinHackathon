@@ -28,6 +28,6 @@ app.get("/:category", (req, res) => {
             categoryData : categoriesData[category]
         });
     } else {
-        res.send("Error: 404 Page Not Found");
+        res.render("error.ejs");
     }
 })

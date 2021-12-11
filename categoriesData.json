@@ -1,26 +1,37 @@
 {
     "mensclothing" : {
         "title" : "Men's Clothing",
-        "data" : "mensClothing"
+        "data" : "mensClothing",
+        "carouselImages" : ["/assets/mensClothing1.jpg", "/assets/mensClothing2.jpg", "/assets/mensClothing3.jpg"]
     },
 
     "womensclothing" : {
         "title" : "Women's Clothing",
-        "data" : "womensClothing"
+        "data" : "womensClothing",
+        "carouselImages" : ["/assets/womensClothing1.jpg", "/assets/womensClothing2.jpg", "/assets/mensClothing3.jpg"]
     },
 
     "kidsclothing" : {
         "title" : "Kid's Clothing",
-        "data" : "kidsClothing"
+        "data" : "kidsClothing",
+        "carouselImages" : ["/assets/kidsClothing1.jpg", "/assets/kidsClothing2.jpg", "/assets/kidsClothing3.jpg"]
     },
 
     "electronics" : {
         "title" : "Electronics",
-        "data" : "furniture"
+        "data" : "furniture",
+        "carouselImages" : ["/assets/electronics1.jpg", "/assets/electronics2.jpg", "/assets/electronics3.jpg"]
     },
 
     "furniture" : {
         "title" :"Furniture",
-        "data" : "furniture"
+        "data" : "furniture",
+        "carouselImages" : ["/assets/furniture1.jpg", "/assets/furniture2.jpg", "/assets/furniture3.jpg"]
+    },
+
+    "homepage" : {
+        "title" :"Homepage",
+        "data" : "homepage",
+        "carouselImages" : ["/assets/firstModalImage.jpg", "/assets/secondModalImage.jpg", "/assets/thirdModalImage.jpg"]
     }
 }

@@ -14,7 +14,9 @@ app.listen(PORT, (req, res) => {
 })
 
 app.get("/", (req, res) => {
-    res.render("homepage.ejs");
+    res.render("homepage.ejs", {
+        categoryData : categoriesData["homepage"]
+    });
 })
 
 app.get("/:category", (req, res) => {
@@ -23,7 +25,7 @@ app.get("/:category", (req, res) => {
     if(categoriesData[category]) {
         res.render("category.ejs", {
             category : category,
-            data : categoriesData[category]
+            categoryData : categoriesData[category]
         });
     } else {
         res.send("Error: 404 Page Not Found");

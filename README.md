@@ -7,7 +7,7 @@ Topic: Climate Change
 
 EcoVille is an online platform that allows individuals to reduce overall waste by donating unused goods amongst others in their community.
 
-https://ecoville.netlify.app/
+https://ecoville.herokuapp.com/
 
 
 Improvements made over the following months including:

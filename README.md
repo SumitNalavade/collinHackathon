@@ -24,8 +24,10 @@ Technologies Used:
 - SASS/SCSS
 - Bootstrap
 - JavaScript
+- EJS
 - Google Firebase
 - Parcel Bundler
+- Heroku
 
 
 

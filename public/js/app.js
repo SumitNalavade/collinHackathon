@@ -42,6 +42,8 @@ export function successfulSignIn() {
         button.classList.toggle("d-none");
     })
 
+    document.querySelector("#carouselSignupButton").classList.add("d-none")
+
     fillProfileModal();
 
     document.querySelector(".btn-close").click();
@@ -53,6 +55,8 @@ export function successfulSignOut() {
     document.querySelector("#profileIconButton").classList.add("d-none");
 
     document.querySelector("#closeModalButton").click();
+
+    document.querySelector("#carouselSignupButton").classList.remove("d-none")
 
 }
 

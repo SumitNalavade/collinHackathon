@@ -106,6 +106,9 @@ nav .custom-toggler.navbar-toggler .navbar-toggler-icon {
   grid-template-columns: 1fr 2fr;
   padding: 1em 0em;
 }
+.itemDetailsModalBody div {
+  margin: 10px;
+}
 .itemDetailsModalBody .itemImageDiv {
   display: flex;
   justify-content: center;

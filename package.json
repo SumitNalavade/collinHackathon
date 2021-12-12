@@ -2,7 +2,8 @@
   "name": "EcoVille",
   "source": "templates/index.html",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test" : "npx nodemon index.js"
   },
   "dependencies": {
     "ejs": "^3.1.6",

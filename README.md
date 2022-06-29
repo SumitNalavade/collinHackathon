@@ -66,11 +66,11 @@ Build project
 
 ## Screenshots
 
-![App Screenshot](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%202.59.08%20AM.png?raw=true)
+![](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%202.59.08%20AM.png?raw=true)
 
-![App Screenshot](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%202.59.49%20AM.png?raw=true)
+![](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%202.59.49%20AM.png?raw=true)
 
-![App Screenshot](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%203.00.13%20AM.png?raw=true)
+![](https://github.com/SumitNalavade/ecoville/blob/master/Screen%20Shot%202021-11-29%20at%203.00.13%20AM.png?raw=true)
 
 ## License
 
